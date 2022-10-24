@@ -8,13 +8,11 @@ namespace FamilyScheduler.Controllers
         [Route("List")]
         public IActionResult List()
         {
-            return View("List");
-        }
+            // Add logic here that will display correct view for Parent or Household member
+            // Parent Renders List, Household member renders Dashboard
 
-        [Route("Dashboard/{id}")]
-        public IActionResult DisplayDashboard()
-        {
-            return View("Dashboard");
+            return View("List");
+            //return View("Dashboard")'
         }
 
         [Route("Entry")]
