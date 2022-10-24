@@ -11,6 +11,12 @@ namespace FamilyScheduler.Controllers
             return View("List");
         }
 
+        [Route("Dashboard/{id}")]
+        public IActionResult DisplayDashboard()
+        {
+            return View("Dashboard");
+        }
+
         [Route("Entry")]
         public IActionResult Entry()
         {

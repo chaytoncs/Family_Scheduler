@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\csutt769\source\repos\Family_Scheduler\FamilyScheduler\FamilyScheduler
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/csutt769/source/repos/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/csutt769/source/repos/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
