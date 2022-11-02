@@ -11,10 +11,10 @@ namespace FamilyScheduler.Controllers
             return View("List");
         }
 
-        [Route("Entry")]
-        public IActionResult Entry()
+        [Route("Create")]
+        public IActionResult Create()
         {
-            return View("Entry");
+            return View("Create");
         }
 
         [Route("Delete/{id}")]

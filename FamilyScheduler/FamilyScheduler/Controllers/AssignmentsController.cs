@@ -2,9 +2,11 @@
 
 namespace FamilyScheduler.Controllers
 {
+    [Route("")]
     [Route("Assignments")]
     public class AssignmentsController : Controller
     {
+        [Route("")]
         [Route("List")]
         public IActionResult List()
         {
@@ -15,10 +17,10 @@ namespace FamilyScheduler.Controllers
             //return View("Dashboard")'
         }
 
-        [Route("Entry")]
-        public IActionResult Entry()
+        [Route("Create")]
+        public IActionResult Create()
         {
-            return View("Entry");
+            return View("Create");
         }
 
         [Route("Details/{id}")]
