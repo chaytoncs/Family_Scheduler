@@ -1,14 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FamilyScheduler.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyScheduler.Controllers
 {
     [Route("Task")]
     public class TaskController : Controller
     {
+        private readonly ILogger<TaskController> _logger;
+        // DB Context
+        private readonly FamilySchedulerContext _context;
+
+        public TaskController(ILogger<TaskController> logger, FamilySchedulerContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+
         [Route("List")]
         public IActionResult List()
         {
-            return View("List");
+            // Get all rows in Tasks table as a list of Task entities.
+            List<FamilyScheduler.Models.Task> tasks = _context.Tasks.ToList();
+            return View(tasks);
         }
 
         [Route("Create")]
