@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FamilyScheduler.Migrations
 {
     [DbContext(typeof(FamilySchedulerContext))]
-    [Migration("20221107013228_Initial")]
-    partial class Initial
+    [Migration("20221107233816_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
