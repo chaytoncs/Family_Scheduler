@@ -1,5 +1,6 @@
 ﻿using FamilyScheduler.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FamilyScheduler.Controllers
 {
@@ -17,11 +18,10 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("List")]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
             // Get all rows in Tasks table as a list of Task entities.
-            List<FamilyScheduler.Models.Task> tasks = _context.Tasks.ToList();
-            return View(tasks);
+            return View(await _context.Tasks.ToListAsync());
         }
 
         [Route("Create")]

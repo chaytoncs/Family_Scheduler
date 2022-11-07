@@ -24,7 +24,7 @@ namespace FamilyScheduler.Models
 
         [Required]
         [DefaultValue(false)]
-        [DisplayName("Complete")]
+        [DisplayName("Completed")]
         public bool Completed { get; set; }
 
         // Navigation Properties
