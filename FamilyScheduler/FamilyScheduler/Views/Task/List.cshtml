@@ -2,6 +2,7 @@
     ViewData["Title"] = "Tasks List";
 }
 
+<h1>Task List</h1>
 <table class="table">
     <thead>
         <tr>
@@ -23,18 +24,17 @@
                     @el.Description
                 </td>
                 <td>
-                    @el.Workload
+                    @el.Workload.Description
                 </td>
                 <td>
-                    @el.Frequency
+                    @el.Frequency.Description
                 </td>
                 <td>
-                    @el.TaskType
+                    @el.TaskType.Description
                 </td>
                 <td>
-                    <form asp-action="Delete" method="post">
-
-                        <input type="submit" value="delete">
+                    <form asp-action="Delete" asp-route-id="@el.TaskID" method="post">
+                        <input type="submit" value="Delete">
                     </form>
                 </td>
             </tr>

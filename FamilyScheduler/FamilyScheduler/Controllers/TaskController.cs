@@ -21,7 +21,16 @@ namespace FamilyScheduler.Controllers
         public async Task<IActionResult> List()
         {
             // Get all rows in Tasks table as a list of Task entities.
-            return View(await _context.Tasks.ToListAsync());
+            // Create list of DTOS to return to the view
+            // Query the tasks like we have currently
+           // foreach(var task in _context.Tasks)
+            //{
+            //    TaskDTO tdto = new TaskDTO();
+                // set the dto property values
+                // 
+            //}
+            // Change the view to use the DTO instead
+            return View(await _context.Tasks.Include(x => x.Workload).Include(x => x.Frequency).Include(x => x.TaskType).ToListAsync());
         }
 
         [Route("Create")]
@@ -42,10 +51,12 @@ namespace FamilyScheduler.Controllers
             return View("Edit");
         }
 
+        [HttpPost]
         [Route("Delete/{id}")]
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View("Delete");
+            var task = await _context.Tasks.FindAsync(id);
+            return View(task);
         }
     }
 }
