@@ -7,19 +7,16 @@ namespace FamilyScheduler.Models
     {
         [Required]
         [DisplayName("Frequency ID")]
-        public int FrequencyID { get; set; }
+        public int? FrequencyID { get; set; }
 
         [Required]
         [StringLength(100)]
-        [DisplayName("Description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
-        [DisplayName("Value")]
-        public int Value { get; set; }
+        public int? Value { get; set; }
 
         // Navigation Properties
-        [DisplayName("Tasks")]
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Task>? Tasks { get; set; }
     }
 }

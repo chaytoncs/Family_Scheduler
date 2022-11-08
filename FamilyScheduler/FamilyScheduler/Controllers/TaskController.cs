@@ -20,16 +20,7 @@ namespace FamilyScheduler.Controllers
         [Route("List")]
         public async Task<IActionResult> List()
         {
-            // Get all rows in Tasks table as a list of Task entities.
-            // Create list of DTOS to return to the view
-            // Query the tasks like we have currently
-           // foreach(var task in _context.Tasks)
-            //{
-            //    TaskDTO tdto = new TaskDTO();
-                // set the dto property values
-                // 
-            //}
-            // Change the view to use the DTO instead
+            // Placeholder code for Lab 6 until I fully implement the DTO for my Models
             return View(await _context.Tasks.Include(x => x.Workload).Include(x => x.Frequency).Include(x => x.TaskType).ToListAsync());
         }
 
@@ -55,8 +46,13 @@ namespace FamilyScheduler.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
-            var task = await _context.Tasks.FindAsync(id);
-            return View(task);
+            // Trying to figure out if I need confirm delete action or if I can do the deletion on this Action
+            if (!ModelState.IsValid)
+            {
+                // Not sure what I want / need to return here
+                return View("Error");
+            }
+            return View(await _context.Tasks.FindAsync(id));
         }
     }
 }

@@ -7,15 +7,13 @@ namespace FamilyScheduler.Models
     {
         [Required]
         [DisplayName("Task Type ID")]
-        public int TaskTypeID { get; set; } // PK
+        public int? TaskTypeID { get; set; } // PK
 
         [Required]
         [StringLength(100)]
-        [DisplayName("Description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         // Nagivation Properties
-        [DisplayName("Tasks")]
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Task>? Tasks { get; set; }
     }
 }

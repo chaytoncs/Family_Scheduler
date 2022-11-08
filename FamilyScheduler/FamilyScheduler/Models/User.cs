@@ -7,20 +7,19 @@ namespace FamilyScheduler.Models
     {
         [Required]
         [DisplayName("User ID")]
-        public int UserID { get; set; } // PK
+        public int? UserID { get; set; } // PK
 
         [Required]
         [StringLength(75)]
         [DisplayName("First Name")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
         [StringLength(75)]
         [DisplayName("Last Name")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         // Navigation Properties
-        [DisplayName("Assignments")]
-        public ICollection<Assignment> Assignments { get; set; }
+        public ICollection<Assignment>? Assignments { get; set; }
     }
 }

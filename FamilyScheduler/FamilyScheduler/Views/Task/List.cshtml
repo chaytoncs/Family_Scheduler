@@ -3,6 +3,12 @@
 }
 
 <h1>Task List</h1>
+
+<div style="float: right">
+    <form  asp-controller="Task" asp-action="Create">
+        <input type="submit" value="Add Task">
+    </form>
+</div>
 <table class="table">
     <thead>
         <tr>
