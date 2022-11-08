@@ -15,7 +15,7 @@ namespace FamilyScheduler.Models
 
         [Required]
         [DisplayName("Frequency ID")]
-        public int? FrequencyID { get; set; }
+        public int? FrequencyID { get; set; } // FK
 
         [Required]
         [DisplayName("Task Type ID")]
