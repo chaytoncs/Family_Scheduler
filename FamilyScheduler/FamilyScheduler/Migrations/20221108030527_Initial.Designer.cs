@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FamilyScheduler.Migrations
 {
     [DbContext(typeof(FamilySchedulerContext))]
-    [Migration("20221107233816_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221108030527_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,20 +21,24 @@ namespace FamilyScheduler.Migrations
 
             modelBuilder.Entity("FamilyScheduler.Models.Assignment", b =>
                 {
-                    b.Property<int>("AssignmentID")
+                    b.Property<int?>("AssignmentID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Completed")
+                    b.Property<bool?>("Completed")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TaskID")
+                    b.Property<int?>("TaskID")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AssignmentID");
@@ -48,7 +52,7 @@ namespace FamilyScheduler.Migrations
 
             modelBuilder.Entity("FamilyScheduler.Models.Frequency", b =>
                 {
-                    b.Property<int>("FrequencyID")
+                    b.Property<int?>("FrequencyID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -57,7 +61,8 @@ namespace FamilyScheduler.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Value")
+                    b.Property<int?>("Value")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.HasKey("FrequencyID");
@@ -67,7 +72,7 @@ namespace FamilyScheduler.Migrations
 
             modelBuilder.Entity("FamilyScheduler.Models.Task", b =>
                 {
-                    b.Property<int>("TaskID")
+                    b.Property<int?>("TaskID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -76,13 +81,16 @@ namespace FamilyScheduler.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("FrequencyID")
+                    b.Property<int?>("FrequencyID")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TaskTypeID")
+                    b.Property<int?>("TaskTypeID")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("WorkloadID")
+                    b.Property<int?>("WorkloadID")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.HasKey("TaskID");
@@ -98,7 +106,7 @@ namespace FamilyScheduler.Migrations
 
             modelBuilder.Entity("FamilyScheduler.Models.TaskType", b =>
                 {
-                    b.Property<int>("TaskTypeID")
+                    b.Property<int?>("TaskTypeID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -114,7 +122,7 @@ namespace FamilyScheduler.Migrations
 
             modelBuilder.Entity("FamilyScheduler.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -135,7 +143,7 @@ namespace FamilyScheduler.Migrations
 
             modelBuilder.Entity("FamilyScheduler.Models.Workload", b =>
                 {
-                    b.Property<int>("WorkloadID")
+                    b.Property<int?>("WorkloadID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -144,7 +152,8 @@ namespace FamilyScheduler.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Value")
+                    b.Property<int?>("Value")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.HasKey("WorkloadID");

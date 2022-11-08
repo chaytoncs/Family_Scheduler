@@ -46,8 +46,17 @@ namespace FamilyScheduler.Data
                 Frequency = frequency,
             };
 
+            var task2 = new FamilyScheduler.Models.Task
+            {
+                Description = "Mow the Lawn",
+                Workload = workload,
+                TaskType = tasktype,
+                Frequency = frequency,
+            };
+
             // Add to DbSet
             context.Tasks.Add(task);
+            context.Tasks.Add(task2);
 
             // Commit Changes
             context.SaveChanges();
