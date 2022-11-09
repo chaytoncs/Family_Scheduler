@@ -5,21 +5,17 @@ namespace FamilyScheduler.Models
 {
     public class User
     {
-        [Required]
-        [DisplayName("User ID")]
-        public int? UserID { get; set; } // PK
+        public int UserID { get; set; } // PK
 
-        [Required]
         [StringLength(75)]
         [DisplayName("First Name")]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        [Required]
         [StringLength(75)]
         [DisplayName("Last Name")]
-        public string? LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         // Navigation Properties
-        public ICollection<Assignment>? Assignments { get; set; }
+        public ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
     }
 }

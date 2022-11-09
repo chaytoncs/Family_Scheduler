@@ -5,18 +5,14 @@ namespace FamilyScheduler.Models
 {
     public class Workload
     {
-        [Required]
-        [DisplayName("Workload ID")]
-        public int? WorkloadID { get; set; } // PK
+        public int WorkloadID { get; set; } // PK
 
-        [Required]
         [StringLength(100)]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        [Required]
-        public int? Value { get; set; }
+        public int Value { get; set; }
 
         // Navigation Properties
-        public ICollection<Task>? Tasks { get; set; }
+        public ICollection<Task> Tasks { get; set; } = new List<Task>();
     }
 }

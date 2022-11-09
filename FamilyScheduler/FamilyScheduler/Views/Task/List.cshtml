@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<FamilyScheduler.Models.Task>
+@{
     ViewData["Title"] = "Tasks List";
 }
 
@@ -21,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(FamilyScheduler.Models.Task el in Model){
+        @foreach(var el in Model){
             <tr>
                 <td>
                     @el.TaskID

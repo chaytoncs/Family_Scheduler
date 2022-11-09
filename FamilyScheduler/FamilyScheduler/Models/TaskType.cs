@@ -5,15 +5,12 @@ namespace FamilyScheduler.Models
 {
     public class TaskType
     {
-        [Required]
-        [DisplayName("Task Type ID")]
-        public int? TaskTypeID { get; set; } // PK
+        public int TaskTypeID { get; set; } // PK
 
-        [Required]
         [StringLength(100)]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         // Nagivation Properties
-        public ICollection<Task>? Tasks { get; set; }
+        public ICollection<Task> Tasks { get; set; } = new List<Task>();
     }
 }
