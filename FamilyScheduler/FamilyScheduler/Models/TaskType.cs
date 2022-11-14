@@ -7,7 +7,6 @@ namespace FamilyScheduler.Models
     {
         public int TaskTypeID { get; set; } // PK
 
-        [StringLength(100)]
         public string Description { get; set; } = string.Empty;
 
         // Nagivation Properties

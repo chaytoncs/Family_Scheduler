@@ -7,7 +7,6 @@ namespace FamilyScheduler.Models
     {
         public int WorkloadID { get; set; } // PK
 
-        [StringLength(100)]
         public string Description { get; set; } = string.Empty;
 
         public int Value { get; set; }

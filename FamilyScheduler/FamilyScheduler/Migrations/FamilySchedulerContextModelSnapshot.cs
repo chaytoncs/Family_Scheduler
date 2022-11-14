@@ -52,7 +52,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Value")
@@ -71,7 +70,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("FrequencyID")
@@ -102,7 +100,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("TaskTypeID");
@@ -118,12 +115,10 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(75)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(75)
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserID");
@@ -139,7 +134,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Value")

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FamilyScheduler.Migrations
 {
     [DbContext(typeof(FamilySchedulerContext))]
-    [Migration("20221109224354_Initial")]
+    [Migration("20221114202845_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Value")
@@ -73,7 +72,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("FrequencyID")
@@ -104,7 +102,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("TaskTypeID");
@@ -120,12 +117,10 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(75)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(75)
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserID");
@@ -141,7 +136,6 @@ namespace FamilyScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Value")

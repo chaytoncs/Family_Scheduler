@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FamilyScheduler.Models.Task>
+﻿@model IEnumerable<FamilyScheduler.Models.DTO.TaskDTO>
 @{
     ViewData["Title"] = "Tasks List";
 }
@@ -18,6 +18,7 @@
             <th scope="col">Workload</th>
             <th scope="col">Frequency</th>
             <th scope="col">Task Type</th>
+            <th scope="col">Edit</th>
             <th scope="col">Delete</th>
         </tr>
     </thead>
@@ -31,18 +32,19 @@
                     @el.Description
                 </td>
                 <td>
-                    @el.Workload.Description
+                    @el.WorkloadDescription
                 </td>
                 <td>
-                    @el.Frequency.Description
+                    @el.FrequencyDescription
                 </td>
                 <td>
-                    @el.TaskType.Description
+                    @el.TaskTypeDescription
                 </td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@el.TaskID" method="post">
-                        <input type="submit" value="Delete">
-                    </form>
+                    <a asp-action="Edit" asp-route-id="@el.TaskID">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@el.TaskID">Delete</a>
                 </td>
             </tr>
         }

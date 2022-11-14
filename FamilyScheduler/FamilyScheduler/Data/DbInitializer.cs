@@ -17,7 +17,7 @@ namespace FamilyScheduler.Data
             var workload = new Workload
             {
                 Description = "Hard",
-                Value = 2
+                Value = 3
             };
 
             // Add to DbSet
@@ -32,8 +32,8 @@ namespace FamilyScheduler.Data
 
             var frequency = new Frequency
             {
-                Description = "7 Days a week",
-                Value = 7
+                Description = "Twice Weekly",
+                Value = 2
             };
             // Add to DbSet
             context.Frequencies.Add(frequency);
@@ -54,9 +54,31 @@ namespace FamilyScheduler.Data
                 Frequency = frequency,
             };
 
+            var workloadList = new List<Workload>
+            {
+                new Workload() {Description = "Easy", Value = 1},
+                new Workload() {Description = "Medium", Value = 2}
+            };
+
+            var frequencyList = new List<Frequency>
+            {
+                new Frequency() {Description = "Daily", Value = 1},
+                new Frequency() {Description = "Weekly", Value = 7}
+            };
+
+            var taskTypeList = new List<TaskType>
+            {
+                new TaskType() {Description = "Outdoor Task"},
+                new TaskType() {Description = "Shopping Task"}
+            };
+
+
             // Add to DbSet
             context.Tasks.Add(task);
             context.Tasks.Add(task2);
+            context.Workloads.AddRange(workloadList);
+            context.Frequencies.AddRange(frequencyList);
+            context.TaskTypes.AddRange(taskTypeList);
 
             // Commit Changes
             context.SaveChanges();

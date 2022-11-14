@@ -1,4 +1,4 @@
-﻿namespace FamilyScheduler.Models
+﻿namespace FamilyScheduler.Models.DTO
 {
     public class TaskTypeDTO
     {

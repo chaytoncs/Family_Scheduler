@@ -15,7 +15,7 @@ namespace FamilyScheduler.Migrations
                 {
                     FrequencyID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
                     Value = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +29,7 @@ namespace FamilyScheduler.Migrations
                 {
                     TaskTypeID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
+                    Description = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,8 +42,8 @@ namespace FamilyScheduler.Migrations
                 {
                     UserID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(type: "TEXT", maxLength: 75, nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", maxLength: 75, nullable: false)
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +56,7 @@ namespace FamilyScheduler.Migrations
                 {
                     WorkloadID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
                     Value = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -70,7 +70,7 @@ namespace FamilyScheduler.Migrations
                 {
                     TaskID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
                     FrequencyID = table.Column<int>(type: "INTEGER", nullable: false),
                     TaskTypeID = table.Column<int>(type: "INTEGER", nullable: false),
                     WorkloadID = table.Column<int>(type: "INTEGER", nullable: false)
