@@ -124,7 +124,7 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
-        public async Task<IActionResult> Edit(int id, [Bind("TaskID,WorkloadID,FrequencyID,TaskTypeID,Description")] TaskDTO task)
+        public async Task<IActionResult> Edit(int? id, [Bind("TaskID,WorkloadID,FrequencyID,TaskTypeID,Description")] TaskDTO task)
         {
             // Logic check -- do the IDs match
             if (id != task.TaskID)
@@ -170,7 +170,6 @@ namespace FamilyScheduler.Controllers
             return View(task);
         }
 
-        [HttpPost]
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
