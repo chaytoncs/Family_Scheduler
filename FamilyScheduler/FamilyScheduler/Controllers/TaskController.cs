@@ -43,10 +43,64 @@ namespace FamilyScheduler.Controllers
             return View(taskDTOs);
         }
 
+        // GET CREATE
         [Route("Create")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Add Workloads, Frequencies, and Task Types to Viewbag to display in Select List
+            var workloads = await _context.Workloads.ToListAsync();
+            var workloadList = new List<SelectListItem>();
+
+            foreach (Workload w in workloads)
+            {
+                workloadList.Add(new SelectListItem { Value = w.WorkloadID.ToString(), Text = w.Description });
+            }
+            // Add list to ViewBag as a dynamic property.
+            ViewBag.WorkloadList = workloadList;
+
+            var frequencies = await _context.Frequencies.ToListAsync();
+            var frequencyList = new List<SelectListItem>();
+
+            foreach (Frequency f in frequencies)
+            {
+                frequencyList.Add(new SelectListItem { Value = f.FrequencyID.ToString(), Text = f.Description });
+            }
+            // Add list to ViewBag as a dynamic property.
+            ViewBag.FrequencyList = frequencyList;
+
+            var taskTypes = await _context.TaskTypes.ToListAsync();
+            var taskTypeList = new List<SelectListItem>();
+
+            foreach (TaskType t in taskTypes)
+            {
+                taskTypeList.Add(new SelectListItem { Value = t.TaskTypeID.ToString(), Text = t.Description });
+            }
+            // Add list to ViewBag as a dynamic property.
+            ViewBag.TaskTypeList = taskTypeList;
             return View("Create");
+        }
+
+        // POST CREATE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Create")]
+        public async Task<IActionResult> Create([Bind("TaskID,Description,FrequencyID,TaskTypeID,WorkloadID")] TaskDTO task)
+        {
+            if (ModelState.IsValid)
+            {
+                FamilyScheduler.Models.Task t = new FamilyScheduler.Models.Task
+                {
+                    TaskID = task.TaskID,
+                    Description = task.Description,
+                    FrequencyID = task.FrequencyID,
+                    WorkloadID = task.WorkloadID,
+                    TaskTypeID = task.TaskTypeID
+                };
+                _context.Add(t);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(List));
+            }
+            return View(task);
         }
 
         [Route("Details/{id}")]
@@ -55,7 +109,7 @@ namespace FamilyScheduler.Controllers
             return View("Details");
         }
 
-        // GET REQUEST
+        // GET EDIT
         [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -121,6 +175,7 @@ namespace FamilyScheduler.Controllers
             return View(taskDTO);
         }
 
+        // POST EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
@@ -170,16 +225,43 @@ namespace FamilyScheduler.Controllers
             return View(task);
         }
 
+        // GET DELETE
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
-            // Trying to figure out if I need confirm delete action or if I can do the deletion on this Action
-            if (!ModelState.IsValid)
+            if (id == null || _context.Tasks == null)
             {
-                // Not sure what I want / need to return here
-                return View("Error");
+                return NotFound();
             }
-            return View(await _context.Tasks.FindAsync(id));
+
+            var task = await _context.Tasks
+                .FirstOrDefaultAsync(t => t.TaskID == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return View(task);
+        }
+
+        // POST DELETE
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.Tasks == null)
+            {
+                return Problem("Entity set 'FamilySchedulerContext.Tasks'  is null.");
+            }
+            var task = await _context.Tasks.FindAsync(id);
+            if (task != null)
+            {
+                _context.Tasks.Remove(task);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(List));
         }
     }
 }

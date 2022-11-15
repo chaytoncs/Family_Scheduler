@@ -1,7 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model FamilyScheduler.Models.DTO.TaskDTO
+
 @{
-    <h1>Add Task</h1>
-    <p>This view will be used to add a task.</p>
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Task</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrequencyDescription" class="control-label"></label>
+                <select asp-for="FrequencyID" class ="form-select" asp-items="ViewBag.FrequencyList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskTypeDescription" class="control-label"></label>
+                <select asp-for="TaskTypeID" class ="form-select" asp-items="ViewBag.TaskTypeList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkloadDescription" class="control-label"></label>
+                <select asp-for="WorkloadID" class ="form-select" asp-items="ViewBag.WorkloadList"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
