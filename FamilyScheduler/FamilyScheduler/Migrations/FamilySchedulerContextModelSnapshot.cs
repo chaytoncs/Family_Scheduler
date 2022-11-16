@@ -121,6 +121,10 @@ namespace FamilyScheduler.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
