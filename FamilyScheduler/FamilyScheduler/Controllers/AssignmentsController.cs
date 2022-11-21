@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyScheduler.Controllers
 {
     [Route("")]
     [Route("Assignments")]
+    [Authorize]
     public class AssignmentsController : Controller
     {
         [Route("")]

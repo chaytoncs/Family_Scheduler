@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FamilyScheduler.Migrations.Authentication
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20221116231807_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20221121023650_AddIdentity")]
+    partial class AddIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

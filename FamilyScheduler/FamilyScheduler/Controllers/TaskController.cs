@@ -1,6 +1,7 @@
 ﻿using FamilyScheduler.Data;
 using FamilyScheduler.Models;
 using FamilyScheduler.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FamilyScheduler.Controllers
 {
     [Route("Task")]
+    [Authorize]
     public class TaskController : Controller
     {
         private readonly ILogger<TaskController> _logger;

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyScheduler.Controllers
 {
     [Route("Schedule")]
+    [Authorize]
     public class ScheduleController : Controller
     {
         [Route("List")]
