@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\csutt769\\source\\repos\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj": {}
+    "C:\\Users\\chayt\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj": {}
   },
   "projects": {
-    "C:\\Users\\csutt769\\source\\repos\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj": {
+    "C:\\Users\\chayt\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\csutt769\\source\\repos\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj",
+        "projectUniqueName": "C:\\Users\\chayt\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj",
         "projectName": "FamilyScheduler",
-        "projectPath": "C:\\Users\\csutt769\\source\\repos\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj",
-        "packagesPath": "C:\\Users\\csutt769\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\csutt769\\source\\repos\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\obj\\",
+        "projectPath": "C:\\Users\\chayt\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\FamilyScheduler.csproj",
+        "packagesPath": "C:\\Users\\chayt\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\chayt\\Family_Scheduler\\FamilyScheduler\\FamilyScheduler\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\csutt769\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\chayt\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,13 +39,48 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -61,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.305\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

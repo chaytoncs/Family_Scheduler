@@ -1,0 +1,8 @@
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.csproj.AssemblyReference.cache
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.AssemblyInfoInputs.cache
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.AssemblyInfo.cs
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.csproj.CoreCompileInputs.cache
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.RazorAssemblyInfo.cache
+C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\obj\Debug\net6.0\FamilyScheduler.RazorAssemblyInfo.cs
