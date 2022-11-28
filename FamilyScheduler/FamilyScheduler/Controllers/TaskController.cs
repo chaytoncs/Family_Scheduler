@@ -12,13 +12,11 @@ namespace FamilyScheduler.Controllers
     [Authorize]
     public class TaskController : Controller
     {
-        private readonly ILogger<TaskController> _logger;
         // DB Context
         private readonly FamilySchedulerContext _context;
 
-        public TaskController(ILogger<TaskController> logger, FamilySchedulerContext context)
+        public TaskController(FamilySchedulerContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
