@@ -8,109 +8,109 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FamilyScheduler
 build_property.RootNamespace = FamilyScheduler
-build_property.ProjectDir = C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler\
+build_property.ProjectDir = C:\Users\csutt769\Family_Scheduler\FamilyScheduler\FamilyScheduler\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\chayt\Family_Scheduler\FamilyScheduler\FamilyScheduler
+build_property.MSBuildProjectDirectory = C:\Users\csutt769\Family_Scheduler\FamilyScheduler\FamilyScheduler
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/_ViewImports.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Create.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Dashboard.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Delete.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Details.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Edit.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/List.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Assignments/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzaWdubWVudHNcTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Schedule/Create.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Schedule/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NoZWR1bGVcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Schedule/Delete.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Schedule/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NoZWR1bGVcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Schedule/List.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Schedule/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NoZWR1bGVcTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/Error.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Create.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Delete.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Details.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Edit.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/List.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Task/List.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza1xMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/_ViewImports.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/_ViewStart.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/chayt/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/_Layout.cshtml]
+[C:/Users/csutt769/Family_Scheduler/FamilyScheduler/FamilyScheduler/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-wlbn3wbx7t
