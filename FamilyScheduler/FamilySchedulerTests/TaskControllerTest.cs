@@ -110,5 +110,36 @@ namespace FamilySchedulerTests
             var model = Assert.IsType<TaskDTO>(viewResult.Model); // Does the model contain the correct type
             Assert.Equal(model.TaskID, id); // Does the object have the correct property value?
         }
+
+        // Empty Tests
+        [Fact]
+        public void EditPOST_ReturnsViewResult()
+        {
+        }
+
+        [Fact]
+        public void DetailsReturnsViewResultWithOneTask()
+        {
+        }
+
+        [Fact]
+        public void CreateGET_ReturnsViewResult()
+        {
+        }
+
+        [Fact]
+        public void CreatePOST_ReturnsViewResult()
+        {
+        }
+
+        [Fact]
+        public void DeleteGET_ReturnsViewResult()
+        {
+        }
+
+        [Fact]
+        public void DeleteConfirmedPOST_ReturnsViewResult()
+        {
+        }
     }
 }
