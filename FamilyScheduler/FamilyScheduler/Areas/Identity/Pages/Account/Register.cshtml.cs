@@ -104,6 +104,15 @@ namespace FamilyScheduler.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
         }
 
 
@@ -123,6 +132,8 @@ namespace FamilyScheduler.Areas.Identity.Pages.Account
 
                 var userAccount = new FamilyScheduler.Models.User();
                 userAccount.UserName = Input.Email;
+                userAccount.FirstName = Input.FirstName;
+                userAccount.LastName = Input.LastName;
 
                 _context.Add(userAccount);
                 await _context.SaveChangesAsync();

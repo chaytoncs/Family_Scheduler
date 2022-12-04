@@ -1,7 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model FamilyScheduler.Models.DTO.TaskDTO
+
 @{
-    <h1>Task Details</h1>
-    <p>This view will be used to display the task details.</p>
+    ViewData["Title"] = "Details";
 }
+
+<h1>Details</h1>
+
+<div>
+    <h4>Task</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskTypeDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaskTypeDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkloadDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WorkloadDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkloadValue)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WorkloadValue)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FrequencyDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FrequencyDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FrequencyValue)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FrequencyValue)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.TaskID">Edit</a> |
+    <a asp-action="List">Back to List</a>
+</div>

@@ -18,6 +18,7 @@
             <th scope="col">Workload</th>
             <th scope="col">Frequency</th>
             <th scope="col">Task Type</th>
+            <th scope="col">Details</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
         </tr>
@@ -39,6 +40,9 @@
                 </td>
                 <td>
                     @el.TaskTypeDescription
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@el.TaskID">Details</a>
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@el.TaskID">Edit</a>

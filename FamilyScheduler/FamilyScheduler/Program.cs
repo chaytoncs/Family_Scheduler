@@ -6,24 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
 builder.Services.AddDbContext<FamilySchedulerContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddDbContext<AuthenticationContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
 
+// Add common Identity services (login, registration, etc.)
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>() // Add role-related services
     .AddEntityFrameworkStores<AuthenticationContext>();
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
+// Add authorization service and the admin user policy
 builder.Services.AddAuthorization(options =>
 {
+    // Add global authentication requirement for the app
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
-        .Build();
+         .Build();
+
+    // Define a policy that requires user to be in a specific role 
+    // -- used for View-based authorization
+    options.AddPolicy("RequireAdministratorRole", policy =>
+        policy.RequireRole("Admin,SuperUser"));
 });
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -34,7 +41,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 var app = builder.Build();
 
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
@@ -42,10 +49,23 @@ using(var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<FamilySchedulerContext>();
         DbInitializer.Initialize(context);
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occured creating the DB.");
+    }
+
+    try
+    {
+        var context = services.GetRequiredService<AuthenticationContext>();
+        context.Database.Migrate();
+        InitializeUsersRoles.Initialize(services).Wait();
+    }
+    catch (Exception ex)
+    {
+        // Something went wrong
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred seeding the users and roles.");
     }
 }
 

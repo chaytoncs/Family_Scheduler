@@ -21,6 +21,7 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("List")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> List()
         {
             List<FamilyScheduler.Models.Task> tasks = await _context.Tasks.Include(x => x.Workload).Include(x => x.Frequency).Include(x => x.TaskType).ToListAsync();
@@ -104,9 +105,40 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("Details/{id}")]
-        public IActionResult Details()
+        public async Task<IActionResult> Details(int? id)
         {
-            return View("Details");
+            if (id == null || _context.Tasks == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Tasks
+                .Include(t => t.Frequency)
+                .Include(t => t.TaskType)
+                .Include(t => t.Workload)
+                .FirstOrDefaultAsync(m => m.TaskID == id);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            // Use DTO to pass data to the View.
+            TaskDTO taskDTO = new()
+            {
+                TaskID = task.TaskID,
+                WorkloadID = task.WorkloadID,
+                FrequencyID = task.FrequencyID,
+                TaskTypeID = task.TaskTypeID,
+                Description = task.Description,
+                WorkloadDescription = task.Workload.Description,
+                FrequencyDescription = task.Frequency.Description,
+                TaskTypeDescription = task.TaskType.Description,
+                WorkloadValue = task.Workload.Value,
+                FrequencyValue = task.Frequency.Value
+            };
+
+            return View(taskDTO);
         }
 
         // GET EDIT
@@ -241,14 +273,23 @@ namespace FamilyScheduler.Controllers
                 return NotFound();
             }
 
-            return View(task);
+            // Use DTO to pass data to the View.
+            TaskDTO taskDTO = new()
+            {
+                TaskID = task.TaskID,
+                WorkloadID = task.WorkloadID,
+                FrequencyID = task.FrequencyID,
+                TaskTypeID = task.TaskTypeID,
+                Description = task.Description,
+            };
+            return View(taskDTO);
         }
 
         // POST DELETE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("Delete/{id}")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Tasks == null)
             {

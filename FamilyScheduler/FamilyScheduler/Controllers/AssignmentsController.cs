@@ -10,13 +10,13 @@ namespace FamilyScheduler.Controllers
     {
         [Route("")]
         [Route("List")]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            // Add logic here that will display correct view for Parent or Household member
-            // Parent Renders List, Household member renders Dashboard
-
-            return View("List");
-            //return View("Dashboard")'
+            if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+            {
+                return View("List");
+            }
+            return View("Dashboard");
         }
 
         [Route("Create")]
