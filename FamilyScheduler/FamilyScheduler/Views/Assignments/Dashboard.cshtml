@@ -21,7 +21,7 @@
                             <p class="card-text">@Html.DisplayNameFor(model => model.DueDate): @el.DueDate</p>
                             <div>
                                 <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
-                                <a asp-action="Details" asp-route-id="@el.AssignmentID">Confirm Completion</a>
+                                <a asp-action="Complete" asp-route-id="@el.AssignmentID">Confirm Completion</a>
                             </div>
                         </div>
                     </div>

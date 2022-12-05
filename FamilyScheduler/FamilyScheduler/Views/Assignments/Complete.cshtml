@@ -1,0 +1,66 @@
+﻿@model FamilyScheduler.Models.DTO.AssignmentDTO
+
+@{
+    ViewData["Title"] = "Verify Completion";
+}
+
+<h1>Verify Completion</h1>
+
+<div>
+    <h4>Assigned Task</h4>
+    <form asp-action="Complete">
+    <input type="hidden" asp-for="@Model.AssignmentID" />
+        <input type="hidden" asp-for="@Model.UserID" />
+        <input type="hidden" asp-for="@Model.TaskID" />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.FullName
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TaskDescription
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.DueDate
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Completed)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Completed
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskTypeDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TaskTypeDescription
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FrequencyDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.FrequencyDescription
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkloadDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.WorkloadDescription
+        </dd>
+    </dl>
+    <div class="form-group">
+        <input type="submit" value="Verify Completion" class="btn btn-primary" />
+    </div>
+    </form>
+</div>
+<div>
+    <a asp-action="List">Back to List</a>
+</div>

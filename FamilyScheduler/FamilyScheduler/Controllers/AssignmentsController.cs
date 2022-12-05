@@ -342,6 +342,121 @@ namespace FamilyScheduler.Controllers
             return RedirectToAction(nameof(List));
         }
 
+        // GET Complete
+        // Used for Household members to mark assignments complete
+        [Route("Complete/{id}")]
+        public async Task<IActionResult> Complete(int? id)
+        {
+            // Temporary Role Check until I implement Member Role for Authorization Attribute
+            // Stop Admins from accessing this function
+            if(User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+            {
+                TempData["ErrorMessage"] = "Page Forbidden: This is a household member function.";
+                return RedirectToAction(nameof(List));
+            }
+
+            // Logic check to see if ID was passed and Assignments has data
+            if (id == null || _context.Assignments == null)
+            {
+                return NotFound();
+            }
+
+            // Query entity and include related data.
+            var assignment = await _context.Assignments
+                .Include(a => a.Task)
+                .Include(a => a.User)
+                .Include(a => a.Task.Workload)
+                .Include(a => a.Task.Frequency)
+                .Include(a => a.Task.TaskType)
+                .FirstOrDefaultAsync(m => m.AssignmentID == id);
+
+            // Logic check -- did we find something?
+            if (assignment == null)
+            {
+                return NotFound();
+            }
+
+            // Transform Assignment to DTO
+            // Pass Assignment DTO to the View
+            AssignmentDTO assignmentDTO = new()
+            {
+                AssignmentID = assignment.AssignmentID,
+                UserID = assignment.UserID,
+                TaskID = assignment.TaskID,
+                DueDate = assignment.DueDate,
+                Completed = assignment.Completed,
+                TaskDescription = assignment.Task.Description,
+                WorkloadDescription = assignment.Task.Workload.Description,
+                FrequencyDescription = assignment.Task.Frequency.Description,
+                TaskTypeDescription = assignment.Task.TaskType.Description,
+                FullName = $"{assignment.User.FirstName} {assignment.User.LastName}"
+            };
+            return View(assignmentDTO);
+        }
+
+        // POST Complete
+        // Used for Household members to mark assignments complete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Complete/{id}")]
+        public async Task<IActionResult> PerformComplete(int id, [Bind("AssignmentID,TaskID,UserID,DueDate,Completed")] AssignmentDTO assignment)
+        {
+            // Temporary Role Check until I implement Member Role for Authorization Attribute
+            // Stop Admins from accessing this function
+            if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+            {
+                TempData["ErrorMessage"] = "Page Forbidden: This is a household member function.";
+                return RedirectToAction(nameof(List));
+            }
+
+            // Logic check -- do the IDs match
+            if (id != assignment.AssignmentID)
+            {
+                return NotFound();
+            }
+
+            // Checks if Model State is Valid
+            // If Model State is Valid it will attempt to Update Assignment, else return invalid Assignment DTO to View
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Pull entity from DB with the provided ID
+                    var entity = await _context.Assignments.FirstOrDefaultAsync(a => a.AssignmentID == id);
+
+                    if (entity != null)
+                    {
+                        /* Update changes to the entity and since it's being tracked
+                         * as we are in a connected state, only SaveChangesAsync is needed
+                         * to persist. */
+
+                        entity.TaskID = assignment.TaskID;
+                        entity.UserID = assignment.UserID;
+                        entity.DueDate = assignment.DueDate;
+                        entity.Completed = true;
+
+                        // Save changes
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    // Checks if Assignment with ID passed in does not exist
+                    if (!_context.Assignments.Any(a => a.AssignmentID == id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(List));
+            }
+            return View(assignment);
+        }
+
+
         // Loads all Members into Select List
         // Used to Display Select Lists on Create and Edit
         private List<SelectListItem> MemberSelectList()
