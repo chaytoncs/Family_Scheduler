@@ -12,7 +12,8 @@ namespace FamilyScheduler.Models
         public int UserID { get; set; } // FK
 
         [DisplayName("Due Date")]
-        public DateOnly DueDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime DueDate { get; set; }
 
         [DefaultValue(false)]
         public bool Completed { get; set; }

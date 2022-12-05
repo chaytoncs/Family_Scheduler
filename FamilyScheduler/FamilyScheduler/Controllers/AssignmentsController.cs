@@ -30,13 +30,6 @@ namespace FamilyScheduler.Controllers
         [Route("")]
         public async Task<IActionResult> List()
         {
-            // Checks if user is signed in
-            ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
-            if (applicationUser == null)
-            {
-                return Problem("No user is signed in.");
-            }
-
             // Admin/ SuperUser Returns all Assigments
             // Member returns Assigments linked to a UserAccountID
             List<Assignment> assignments;
@@ -51,6 +44,12 @@ namespace FamilyScheduler.Controllers
             } 
             else
             {
+                // Checks if user is signed in
+                ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
+                if (applicationUser == null)
+                {
+                    return Problem("No user is signed in.");
+                }
                 // Query Entities and related data specific to a user
                 assignments = await _context.Assignments.Where(a => a.UserID == applicationUser.UserAccountID)
                     .Include(a => a.Task)
