@@ -1,7 +1,74 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<FamilyScheduler.Models.DTO.AssignmentDTO>
 @{
-    <h1>Schedule List</h1>
-    <p>This page will display the history for generated schedules. Parents will be able to access generate new schedule and delete schedule functionality from this view.</p>
+    ViewData["Title"] = "Schedule List";
 }
+
+<h1>Assignments for the Current Schedule</h1>
+<p>I am wondering if I should have a object and table for schedule that contains a ScheduleID, StartDate, and EndDate. I could then add 
+    a FK relationship on every Assignment to a Schedule, which makes more sense IMO. The idea was that this
+    list view would show all Schedules in a table, and off those schedules (row) they could click a View Assignments for Schedule link that would allow them
+    to view assignments specific to that schedule. I could then also do validation to only allows assignments to be added to a currently generated schedule.
+    e.g. If the end date of the Schedule is before DateTime.Today, that schedule would not show up in the SelectList when attempting to add or modify an Assignment.
+</p>
+@if (@TempData.ContainsKey("ErrorMessage"))
+{
+    <h3 class="text-danger">@TempData["ErrorMessage"]?.ToString()</h3>
+}
+<div style="float: right">
+    <form method="get" asp-controller="Schedule" asp-action="Create">
+        <input type="submit" value="Generate New Schedule">
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Completed</th>
+            <th scope="col">Task</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Task Type</th>
+            <th scope="col">Frequency</th>
+            <th scope="col">Workload</th>
+            <th scope="col">Details</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var el in Model)
+        {
+            <tr>
+                <td>
+                    @el.FullName
+                </td>
+                <td>
+                    @el.Completed
+                </td>
+                <td>
+                    @el.TaskDescription
+                </td>
+                <td>
+                    @el.DueDate
+                </td>
+                <td>
+                    @el.TaskTypeDescription
+                </td>
+                <td>
+                    @el.FrequencyDescription
+                </td>
+                <td>
+                    @el.WorkloadDescription
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Assignments" asp-route-id="@el.AssignmentID">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Assignments" asp-route-id="@el.AssignmentID">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="Assignments" asp-route-id="@el.AssignmentID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

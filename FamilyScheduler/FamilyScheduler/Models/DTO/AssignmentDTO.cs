@@ -11,9 +11,8 @@ namespace FamilyScheduler.Models.DTO
 
         public int UserID { get; set; } // FK
 
-        [DataType(DataType.Date)]
         [DisplayName("Due Date")]
-        public DateTime DueDate { get; set; }
+        public DateOnly DueDate { get; set; }
 
         [DefaultValue(false)]
         public bool Completed { get; set; }

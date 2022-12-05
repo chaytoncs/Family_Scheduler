@@ -16,8 +16,8 @@ namespace FamilyScheduler.Data
             // Create Entities
             var workload = new Workload
             {
-                Description = "Hard",
-                Value = 3
+                Description = "Easy",
+                Value = 1
             };
 
             // Add to DbSet
@@ -32,23 +32,15 @@ namespace FamilyScheduler.Data
 
             var frequency = new Frequency
             {
-                Description = "Twice Weekly",
-                Value = 2
+                Description = "Daily",
+                Value = 0
             };
             // Add to DbSet
             context.Frequencies.Add(frequency);
 
             var task = new FamilyScheduler.Models.Task
             {
-                Description = "Please put the dirty dishes in the dishwasher",
-                Workload = workload,
-                TaskType = tasktype,
-                Frequency = frequency,
-            };
-
-            var task2 = new FamilyScheduler.Models.Task
-            {
-                Description = "Mow the Lawn",
+                Description = "Wash the dishes",
                 Workload = workload,
                 TaskType = tasktype,
                 Frequency = frequency,
@@ -56,14 +48,13 @@ namespace FamilyScheduler.Data
 
             var workloadList = new List<Workload>
             {
-                new Workload() {Description = "Easy", Value = 1},
-                new Workload() {Description = "Medium", Value = 2}
+                new Workload() {Description = "Medium", Value = 1},
+                new Workload() {Description = "Hard", Value = 2}
             };
 
             var frequencyList = new List<Frequency>
             {
-                new Frequency() {Description = "Daily", Value = 1},
-                new Frequency() {Description = "Weekly", Value = 7}
+                new Frequency() {Description = "Weekly", Value = 1}
             };
 
             var taskTypeList = new List<TaskType>
@@ -75,7 +66,6 @@ namespace FamilyScheduler.Data
 
             // Add to DbSet
             context.Tasks.Add(task);
-            context.Tasks.Add(task2);
             context.Workloads.AddRange(workloadList);
             context.Frequencies.AddRange(frequencyList);
             context.TaskTypes.AddRange(taskTypeList);
