@@ -1,8 +1,67 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<FamilyScheduler.Models.DTO.AssignmentDTO>
 @{
-    <h1>Assignments List</h1>
-    <p>This page will display a list view of the current scheduled task assignments. This will be the default landing page when the parent user logs in.
-    Parents will be able to access the Add/ Delete/ Modify functionality for task assignments through this screen</p>
+    ViewData["Title"] = "Assignments List";
 }
+
+<h1>Current Scheduled Assignments</h1>
+@if(@TempData.ContainsKey("ErrorMessage")){
+    <h3 class="text-danger">@TempData["ErrorMessage"]?.ToString()</h3>
+}
+<div style="float: right">
+    <form method="get" asp-controller="Assignment" asp-action="Create">
+        <input type="submit" value="Add Assignment">
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Completed</th>
+            <th scope="col">Task</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Task Type</th>
+            <th scope="col">Frequency</th>
+            <th scope="col">Workload</th>
+            <th scope="col">Details</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var el in Model)
+        {
+            <tr>
+                <td>
+                    @el.FullName
+                </td>
+                <td>
+                    @el.Completed
+                </td>
+                <td>
+                    @el.TaskDescription
+                </td>
+                <td>
+                    @el.DueDate
+                </td>
+                <td>
+                    @el.TaskTypeDescription
+                </td>
+                <td>
+                    @el.FrequencyDescription
+                </td>
+                <td>
+                    @el.WorkloadDescription
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@el.AssignmentID">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@el.AssignmentID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -24,7 +24,10 @@ namespace FamilyScheduler.Controllers
         [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> List()
         {
+            // Query entities and related data
             List<FamilyScheduler.Models.Task> tasks = await _context.Tasks.Include(x => x.Workload).Include(x => x.Frequency).Include(x => x.TaskType).ToListAsync();
+
+            // Transform Tasks into Task DTOs to be displayed in the Vie
             List<TaskDTO> taskDTOs = new();
             foreach (FamilyScheduler.Models.Task t in tasks)
             {
@@ -46,38 +49,15 @@ namespace FamilyScheduler.Controllers
 
         // GET CREATE
         [Route("Create")]
-        public async Task<IActionResult> Create()
+        [Authorize(Roles = "Admin,SuperUser")]
+        public IActionResult Create()
         {
             // Add Workloads, Frequencies, and Task Types to Viewbag to display in Select List
-            var workloads = await _context.Workloads.ToListAsync();
-            var workloadList = new List<SelectListItem>();
+            // Add Lists to ViewBag as a dynamic properties.
+            ViewBag.WorkloadList = WorkloadSelectList();
+            ViewBag.FrequencyList = FrequencySelectList();
+            ViewBag.TaskTypeList = TaskTypeSelectList();
 
-            foreach (Workload w in workloads)
-            {
-                workloadList.Add(new SelectListItem { Value = w.WorkloadID.ToString(), Text = w.Description });
-            }
-            // Add list to ViewBag as a dynamic property.
-            ViewBag.WorkloadList = workloadList;
-
-            var frequencies = await _context.Frequencies.ToListAsync();
-            var frequencyList = new List<SelectListItem>();
-
-            foreach (Frequency f in frequencies)
-            {
-                frequencyList.Add(new SelectListItem { Value = f.FrequencyID.ToString(), Text = f.Description });
-            }
-            // Add list to ViewBag as a dynamic property.
-            ViewBag.FrequencyList = frequencyList;
-
-            var taskTypes = await _context.TaskTypes.ToListAsync();
-            var taskTypeList = new List<SelectListItem>();
-
-            foreach (TaskType t in taskTypes)
-            {
-                taskTypeList.Add(new SelectListItem { Value = t.TaskTypeID.ToString(), Text = t.Description });
-            }
-            // Add list to ViewBag as a dynamic property.
-            ViewBag.TaskTypeList = taskTypeList;
             return View("Create");
         }
 
@@ -85,18 +65,22 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Create")]
-        public async Task<IActionResult> Create([Bind("TaskID,Description,FrequencyID,TaskTypeID,WorkloadID")] TaskDTO task)
+        [Authorize(Roles = "Admin,SuperUser")]
+        public async Task<IActionResult> Create([Bind("Description,FrequencyID,TaskTypeID,WorkloadID")] TaskDTO task)
         {
+            // Checks if Model State is Valid
+            // If Model State is Valid it will add the new Task to the DB, else it will return the invalid TaskDTO to the view
             if (ModelState.IsValid)
             {
+                // Transform Task DTO to DTO
                 FamilyScheduler.Models.Task t = new FamilyScheduler.Models.Task
                 {
-                    TaskID = task.TaskID,
                     Description = task.Description,
                     FrequencyID = task.FrequencyID,
                     WorkloadID = task.WorkloadID,
                     TaskTypeID = task.TaskTypeID
                 };
+                // Add Task to Database
                 _context.Add(t);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(List));
@@ -105,24 +89,29 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("Details/{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> Details(int? id)
         {
+            // Logic Check to see if ID was passed in and Tasks has data
             if (id == null || _context.Tasks == null)
             {
                 return NotFound();
             }
 
+            // Query entity and its related data
             var task = await _context.Tasks
                 .Include(t => t.Frequency)
                 .Include(t => t.TaskType)
                 .Include(t => t.Workload)
                 .FirstOrDefaultAsync(m => m.TaskID == id);
 
+            // Logic check to see if Task was found
             if (task == null)
             {
                 return NotFound();
             }
 
+            // Transform Task to DTO
             // Use DTO to pass data to the View.
             TaskDTO taskDTO = new()
             {
@@ -143,8 +132,10 @@ namespace FamilyScheduler.Controllers
 
         // GET EDIT
         [Route("Edit/{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> Edit(int? id)
         {
+            // Logic check to see if ID was passed in or Tasks has data
             if (id == null || _context.Tasks == null)
             {
                 return NotFound();
@@ -163,6 +154,7 @@ namespace FamilyScheduler.Controllers
                 return NotFound();
             }
 
+            // Transform Task to DTO
             // Use DTO to pass data to the View.
             TaskDTO taskDTO = new()
             {
@@ -174,35 +166,10 @@ namespace FamilyScheduler.Controllers
             };
 
             // Add Workloads, Frequencies, and Task Types to Viewbag to display in Select List
-            var workloads = await _context.Workloads.ToListAsync();
-            var workloadList = new List<SelectListItem>();
-
-            foreach (Workload w in workloads)
-            {
-                workloadList.Add(new SelectListItem { Value = w.WorkloadID.ToString(), Text = w.Description });
-            }
-            // Add list to ViewBag as a dynamic property.
-            ViewBag.WorkloadList = workloadList;
-
-            var frequencies = await _context.Frequencies.ToListAsync();
-            var frequencyList = new List<SelectListItem>();
-
-            foreach (Frequency f in frequencies)
-            {
-                frequencyList.Add(new SelectListItem { Value = f.FrequencyID.ToString(), Text = f.Description });
-            }
-            // Add list to ViewBag as a dynamic property.
-            ViewBag.FrequencyList = frequencyList;
-
-            var taskTypes = await _context.TaskTypes.ToListAsync();
-            var taskTypeList = new List<SelectListItem>();
-
-            foreach (TaskType t in taskTypes)
-            {
-                taskTypeList.Add(new SelectListItem { Value = t.TaskTypeID.ToString(), Text = t.Description });
-            }
-            // Add list to ViewBag as a dynamic property.
-            ViewBag.TaskTypeList = taskTypeList;
+            // Add Lists to ViewBag as a dynamic properties.
+            ViewBag.WorkloadList = WorkloadSelectList();
+            ViewBag.FrequencyList = FrequencySelectList();
+            ViewBag.TaskTypeList = TaskTypeSelectList();
 
             return View(taskDTO);
         }
@@ -211,6 +178,7 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> Edit(int? id, [Bind("TaskID,WorkloadID,FrequencyID,TaskTypeID,Description")] TaskDTO task)
         {
             // Logic check -- do the IDs match
@@ -218,7 +186,8 @@ namespace FamilyScheduler.Controllers
             {
                 return NotFound();
             }
-            // Check validation
+            // Checks if Model State is Valid
+            // If Model State is Valid it will attempt to Update Task, else return invalid Task DTO to View
             if (ModelState.IsValid)
             {
                 try
@@ -243,6 +212,7 @@ namespace FamilyScheduler.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    // Checks if Task with ID passed in does not exist
                     if (!_context.Tasks.Any(t => t.TaskID == id))
                     {
                         return NotFound();
@@ -259,20 +229,26 @@ namespace FamilyScheduler.Controllers
 
         // GET DELETE
         [Route("Delete/{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> Delete(int? id)
         {
+            // Logic check to see if ID was passed in or Tasks has data
             if (id == null || _context.Tasks == null)
             {
                 return NotFound();
             }
 
+            // Query entity
             var task = await _context.Tasks
                 .FirstOrDefaultAsync(t => t.TaskID == id);
+
+            // Logic check to see if Task with passed in ID was found
             if (task == null)
             {
                 return NotFound();
             }
 
+            // Transform Task to DTO
             // Use DTO to pass data to the View.
             TaskDTO taskDTO = new()
             {
@@ -289,20 +265,69 @@ namespace FamilyScheduler.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("Delete/{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
+            // Checks if Tasks has data
             if (_context.Tasks == null)
             {
                 return Problem("Entity set 'FamilySchedulerContext.Tasks'  is null.");
             }
+
+            // Query entity based on id passed in
             var task = await _context.Tasks.FindAsync(id);
+
+            // Logic check to see if Task was found
             if (task != null)
             {
+                // If found, remove task
                 _context.Tasks.Remove(task);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(List));
+        }
+
+        // Loads all Workloads into Select List
+        // Used to Display Select Lists on Create and Edit
+        private List<SelectListItem> WorkloadSelectList()
+        {
+            var workloads = _context.Workloads.ToList();
+            var workloadList = new List<SelectListItem>();
+
+            foreach (Workload w in workloads)
+            {
+                workloadList.Add(new SelectListItem { Value = w.WorkloadID.ToString(), Text = w.Description });
+            }
+            return workloadList;
+        }
+
+        // Loads all Frequencies into Select List
+        // Used to Display Select Lists on Create and Edit
+        private List<SelectListItem> FrequencySelectList()
+        {
+            var frequencies = _context.Frequencies.ToList();
+            var frequencyList = new List<SelectListItem>();
+
+            foreach (Frequency f in frequencies)
+            {
+                frequencyList.Add(new SelectListItem { Value = f.FrequencyID.ToString(), Text = f.Description });
+            }
+            return frequencyList;
+        }
+
+        // Loads all TaskTypes into Select List
+        // Used to Display Select Lists on Create and Edit
+        private List<SelectListItem> TaskTypeSelectList()
+        {
+            var taskTypes = _context.TaskTypes.ToList();
+            var taskTypeList = new List<SelectListItem>();
+
+            foreach (TaskType t in taskTypes)
+            {
+                taskTypeList.Add(new SelectListItem { Value = t.TaskTypeID.ToString(), Text = t.Description });
+            }
+            return taskTypeList;
         }
     }
 }

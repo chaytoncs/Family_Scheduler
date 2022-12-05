@@ -1,7 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<FamilyScheduler.Models.DTO.AssignmentDTO>
 @{
-    <h1>Household Member Dashboard</h1>
-    <p>Used to display household member dashboard. I decided to add this to the AssigmentsController since the household member contains logic that pertains solely to assignments</p>
+    ViewData["Title"] = "Dashboard";
+}
+@{
+    @if (@TempData.ContainsKey("ErrorMessage"))
+    {
+        <h5 class="text-danger">@TempData["ErrorMessage"]?.ToString()</h5>
+    }
+    <h1>Scheduled Assignments</h1>
+    @if(@Model.Count() < 1){
+        <h4>No Scheduled Assignments</h4>
+    }else{
+        <div class="container-fluid d-flex flex-row flex-wrap">
+        @foreach(var el in @Model){
+            @if(!@el.Completed){
+                    <div class="card m-2" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Task</h5>
+                            <p class="card-text">@el.TaskDescription</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.DueDate): @el.DueDate</p>
+                            <div>
+                                <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
+                                <a asp-action="Details" asp-route-id="@el.AssignmentID">Confirm Completion</a>
+                            </div>
+                        </div>
+                    </div>
+            }
+        }
+        </div>
+    }
 }
