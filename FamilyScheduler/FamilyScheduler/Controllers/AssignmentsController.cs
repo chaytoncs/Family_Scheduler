@@ -48,7 +48,9 @@ namespace FamilyScheduler.Controllers
                 ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
                 if (applicationUser == null)
                 {
-                    return Problem("No user is signed in.");
+                    // I don't know if this works (for some reason when I reclone my repo and try to run the program it hits this).. 
+                    // I'm assuming the session is still active and it thinks im authenticated. It fixes itself after I close chrome and then run it.
+                    return Redirect("/Identity/Account/Login");
                 }
                 // Query Entities and related data specific to a user
                 assignments = await _context.Assignments.Where(a => a.UserID == applicationUser.UserAccountID)
