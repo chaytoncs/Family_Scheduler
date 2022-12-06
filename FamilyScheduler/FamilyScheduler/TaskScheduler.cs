@@ -16,7 +16,7 @@ namespace TaskSchedulerLibrary
         /// <returns>List of Assignment objects that specify the user, task and date.</returns>
         public static List<Assignment> ScheduleWeek(DateTime start, List<int> userIDs, List<(int TaskID, int Frequency, int Workload)> tasks, int maxTasksPerUser = 1)
         {
-            DateOnly startDate = DateOnly.FromDateTime(start);
+            DateTime startDate = start;
 
             List<Assignment> result = new();
             Random rnd = new();
@@ -43,7 +43,7 @@ namespace TaskSchedulerLibrary
                     else
                     {
                         // Daily task -- randomly assign a date and try again until we find a free date for a daily task.
-                        DateOnly assignedDate = startDate.AddDays(rnd.Next(0, 6));
+                        DateTime assignedDate = startDate.AddDays(rnd.Next(0, 6));
                         int tries = 0;
                         // As long as there is a daily task with the same ID and date, try again, up to max tries
                         while (result.Where(x => x.TaskID == TaskID).Where(x => x.DueDate == assignedDate).Count() > 0)

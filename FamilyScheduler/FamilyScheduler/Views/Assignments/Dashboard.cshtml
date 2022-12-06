@@ -18,7 +18,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Task</h5>
                             <p class="card-text">@el.TaskDescription</p>
-                            <p class="card-text">@Html.DisplayNameFor(model => model.DueDate): @el.DueDate</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.DueDate): @el.DueDate.ToShortDateString()</p>
                             <div>
                                 <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
                                 <a asp-action="Complete" asp-route-id="@el.AssignmentID">Confirm Completion</a>
