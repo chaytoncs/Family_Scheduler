@@ -7,23 +7,29 @@ namespace FamilyScheduler.Areas.Identity.Data
     public class InitializeUsersRoles
     {
         private readonly static string AdministratorRole = "Admin";
-        private readonly static string SuperUserRole = "SuperUser";
+        private readonly static string MemberRole = "Member";
         private readonly static string Password = "Testing123$";
+        private readonly FamilySchedulerContext _context;
 
-        public static async Task Initialize(IServiceProvider serviceProvider)
+        public InitializeUsersRoles(FamilySchedulerContext context)
+        {
+            _context = context;
+        }
+
+        public async Task Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new AuthenticationContext(serviceProvider.GetRequiredService<DbContextOptions<AuthenticationContext>>()))
             {
-                var adminID = await EnsureUser(serviceProvider, Password, "admin@chayton.info");
+                var adminID = await EnsureUser(serviceProvider, Password, "admin@chayton.info", "Chayton", "Sutton");
                 await EnsureRole(serviceProvider, adminID, AdministratorRole);
 
-                var superuserID = await EnsureUser(serviceProvider, Password, "superuser@chayton.info");
-                await EnsureRole(serviceProvider, superuserID, SuperUserRole);
+                var memberID = await EnsureUser(serviceProvider, Password, "member@chayton.info", "Tyler", "Sutton");
+                await EnsureRole(serviceProvider, memberID, MemberRole);
             }
         }
 
         // Check that user exists with provided email address --> create new user if none exists
-        private static async Task<string> EnsureUser(IServiceProvider serviceProvider, string userPw, string UserName)
+        private async Task<string> EnsureUser(IServiceProvider serviceProvider, string userPw, string UserName, string firstName, string lastName)
         {
             // Access the UserManager service
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
@@ -35,6 +41,13 @@ namespace FamilyScheduler.Areas.Identity.Data
                 {
                     // Create new user if none exists
                     user = new ApplicationUser { UserName = UserName };
+                    var userAccount = new FamilyScheduler.Models.User();
+                    userAccount.UserName = user.UserName;
+                    userAccount.FirstName = firstName;
+                    userAccount.LastName = lastName;
+                    _context.Users.Add(userAccount);
+                    await _context.SaveChangesAsync();
+                    user.UserAccountID = userAccount.UserID;
                     await userManager.CreateAsync(user, userPw);
                 }
 
@@ -49,7 +62,7 @@ namespace FamilyScheduler.Areas.Identity.Data
         }
 
         // Check that role exists --> create new rule if none exists
-        private static async Task EnsureRole(IServiceProvider serviceProvider, string uid, string role)
+        private async Task EnsureRole(IServiceProvider serviceProvider, string uid, string role)
         {
             // Access RoleManager service
             var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();

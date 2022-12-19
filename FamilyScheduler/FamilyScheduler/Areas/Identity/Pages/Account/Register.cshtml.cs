@@ -21,6 +21,10 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using FamilyScheduler.Models;
 using FamilyScheduler.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Data;
+using System.Security.Cryptography;
 
 namespace FamilyScheduler.Areas.Identity.Pages.Account
 {
@@ -34,6 +38,8 @@ namespace FamilyScheduler.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly FamilySchedulerContext _context;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly static string MemberRole = "Member";
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -41,7 +47,8 @@ namespace FamilyScheduler.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            FamilySchedulerContext context)
+            FamilySchedulerContext context,
+            IServiceProvider serviceProvider)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -50,6 +57,7 @@ namespace FamilyScheduler.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -150,6 +158,30 @@ namespace FamilyScheduler.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                    var roleManager = _serviceProvider.GetService<RoleManager<IdentityRole>>();
+
+                    if (roleManager != null)
+                    {
+                        // Check whether role exists --> if not, create new role with the provided role name
+                        if (!await roleManager.RoleExistsAsync(MemberRole))
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(MemberRole));
+                        }
+
+                        // Retrieve user with the provided ID and add to the specified role
+                        if (_userManager != null)
+                        {
+                            var member = await _userManager.FindByIdAsync(userId);
+                            await _userManager.AddToRoleAsync(member, MemberRole);
+                        }
+                        else
+                            throw new Exception("userManager null");
+
+                    }
+                    else
+                        throw new Exception("roleManager null");
+
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

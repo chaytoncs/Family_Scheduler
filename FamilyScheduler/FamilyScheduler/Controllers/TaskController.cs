@@ -21,7 +21,7 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("List")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> List()
         {
             // Query entities and related data
@@ -31,8 +31,7 @@ namespace FamilyScheduler.Controllers
             List<TaskDTO> taskDTOs = new();
             foreach (FamilyScheduler.Models.Task t in tasks)
             {
-                TaskDTO taskDTO = new()
-                {
+                TaskDTO taskDTO = new() {
                     TaskID = t.TaskID,
                     Description = t.Description,
                     FrequencyDescription = t.Frequency.Description,
@@ -49,7 +48,7 @@ namespace FamilyScheduler.Controllers
 
         // GET CREATE
         [Route("Create")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             // Add Workloads, Frequencies, and Task Types to Viewbag to display in Select List
@@ -65,7 +64,7 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Create")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Description,FrequencyID,TaskTypeID,WorkloadID")] TaskDTO task)
         {
             // Checks if Model State is Valid
@@ -89,11 +88,11 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("Details/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
-            // Logic Check to see if ID was passed in and Tasks has data
-            if (id == null || _context.Tasks == null)
+            // Logic Check to see if ID was passed in
+            if (id == null)
             {
                 return NotFound();
             }
@@ -132,11 +131,11 @@ namespace FamilyScheduler.Controllers
 
         // GET EDIT
         [Route("Edit/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             // Logic check to see if ID was passed in or Tasks has data
-            if (id == null || _context.Tasks == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -178,7 +177,7 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id, [Bind("TaskID,WorkloadID,FrequencyID,TaskTypeID,Description")] TaskDTO task)
         {
             // Logic check -- do the IDs match
@@ -229,11 +228,11 @@ namespace FamilyScheduler.Controllers
 
         // GET DELETE
         [Route("Delete/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             // Logic check to see if ID was passed in or Tasks has data
-            if (id == null || _context.Tasks == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -265,15 +264,9 @@ namespace FamilyScheduler.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("Delete/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            // Checks if Tasks has data
-            if (_context.Tasks == null)
-            {
-                return Problem("Entity set 'FamilySchedulerContext.Tasks'  is null.");
-            }
-
             // Query entity based on id passed in
             var task = await _context.Tasks.FindAsync(id);
 

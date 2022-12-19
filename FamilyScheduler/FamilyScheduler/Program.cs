@@ -59,7 +59,8 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<AuthenticationContext>();
         context.Database.Migrate();
-        InitializeUsersRoles.Initialize(services).Wait();
+        var accounts = new InitializeUsersRoles(services.GetRequiredService<FamilySchedulerContext>());
+        accounts.Initialize(services).Wait();
     }
     catch (Exception ex)
     {

@@ -28,12 +28,13 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> List()
         {
             // Admin/ SuperUser Returns all Assigments
             // Member returns Assigments linked to a UserAccountID
             List<Assignment> assignments;
-            if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+            if (User.IsInRole("Admin"))
             {
                 // Query Entities and related data
                 assignments = await _context.Assignments.Include(a => a.Task)
@@ -48,10 +49,9 @@ namespace FamilyScheduler.Controllers
                 ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
                 if (applicationUser == null)
                 {
-                    // I don't know if this works (for some reason when I reclone my repo and try to run the program it hits this).. 
-                    // I'm assuming the session is still active and it thinks im authenticated. It fixes itself after I close chrome and then run it.
-                    return Redirect("/Identity/Account/Login");
+                    return Problem("No user is signed in.");
                 }
+
                 // Query Entities and related data specific to a user
                 assignments = await _context.Assignments.Where(a => a.UserID == applicationUser.UserAccountID)
                     .Include(a => a.Task)
@@ -83,7 +83,7 @@ namespace FamilyScheduler.Controllers
             }
 
             // If Admin/SuperUser display List else Member Dashboard
-            if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+            if (User.IsInRole("Admin"))
             {
                 return View("List", assigmentDTOs);
             }
@@ -92,7 +92,7 @@ namespace FamilyScheduler.Controllers
 
         // GET CREATE
         [Route("Create")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             // Add Tasks and Users to Viewbag to display in Select List
@@ -107,7 +107,7 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Create")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("TaskID,UserID,DueDate,Completed")] AssignmentDTO assignment)
         {
             // Checks if Model State is Valid
@@ -131,10 +131,11 @@ namespace FamilyScheduler.Controllers
         }
 
         [Route("Details/{id}")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> Details(int? id)
         {
-            // Logic check to see if ID was passed in and Assignments has data
-            if (id == null || _context.Assignments == null)
+            // Logic check to see if ID was passed in
+            if (id == null)
             {
                 return NotFound();
             }
@@ -155,7 +156,7 @@ namespace FamilyScheduler.Controllers
             }
 
             // Checks to see if User is not an admin
-            if (!User.IsInRole("Admin") && !User.IsInRole("SuperUser"))
+            if (!User.IsInRole("Admin"))
             {
                 ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
                 if (applicationUser == null)
@@ -190,11 +191,11 @@ namespace FamilyScheduler.Controllers
 
         // GET EDIT
         [Route("Edit/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            // Logic check to see if ID was passed and Assignments has data
-            if (id == null || _context.Assignments == null)
+            // Logic check to see if ID was passed in
+            if (id == null)
             {
                 return NotFound();
             }
@@ -233,7 +234,7 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("AssignmentID,TaskID,UserID,DueDate,Completed")] AssignmentDTO assignment)
         {
             // Logic check -- do the IDs match
@@ -285,11 +286,11 @@ namespace FamilyScheduler.Controllers
 
         // GET DELETE
         [Route("Delete/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
-            // Logic check to see if ID is passed in and there are Assignments in DB
-            if (id == null || _context.Assignments == null)
+            // Logic check to see if ID is passed in
+            if (id == null)
             {
                 return NotFound();
             }
@@ -321,15 +322,9 @@ namespace FamilyScheduler.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("Delete/{id}")]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            // Checks if Assignments has data
-            if (_context.Assignments == null)
-            {
-                return Problem("Entity set 'FamilySchedulerContext.Assignments'  is null.");
-            }
-            
             // Query entity
             var assignment = await _context.Assignments.FindAsync(id);
 
@@ -346,18 +341,11 @@ namespace FamilyScheduler.Controllers
         // GET Complete
         // Used for Household members to mark assignments complete
         [Route("Complete/{id}")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> Complete(int? id)
         {
-            // Temporary Role Check until I implement Member Role for Authorization Attribute
-            // Stop Admins from accessing this function
-            if(User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-            {
-                TempData["ErrorMessage"] = "Page Forbidden: This is a household member function.";
-                return RedirectToAction(nameof(List));
-            }
-
             // Logic check to see if ID was passed and Assignments has data
-            if (id == null || _context.Assignments == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -375,6 +363,23 @@ namespace FamilyScheduler.Controllers
             if (assignment == null)
             {
                 return NotFound();
+            }
+
+            // Checks to see if User is not an admin
+            if (!User.IsInRole("Admin"))
+            {
+                ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
+                if (applicationUser == null)
+                {
+                    return Problem("No user is signed in.");
+                }
+
+                // Checks if user is attempting to access details of an assigment that is not theirs
+                if (assignment.UserID != applicationUser.UserAccountID)
+                {
+                    TempData["ErrorMessage"] = "Page Forbidden: This assignment does not belong to you.";
+                    return RedirectToAction(nameof(List));
+                }
             }
 
             // Transform Assignment to DTO
@@ -400,16 +405,9 @@ namespace FamilyScheduler.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Complete/{id}")]
-        public async Task<IActionResult> PerformComplete(int id, [Bind("AssignmentID,TaskID,UserID,DueDate,Completed")] AssignmentDTO assignment)
+        [Authorize(Roles = "Admin,Member")]
+        public async Task<IActionResult> PerformComplete(int id, [Bind("AssignmentID")] AssignmentDTO assignment)
         {
-            // Temporary Role Check until I implement Member Role for Authorization Attribute
-            // Stop Admins from accessing this function
-            if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-            {
-                TempData["ErrorMessage"] = "Page Forbidden: This is a household member function.";
-                return RedirectToAction(nameof(List));
-            }
-
             // Logic check -- do the IDs match
             if (id != assignment.AssignmentID)
             {
@@ -430,10 +428,6 @@ namespace FamilyScheduler.Controllers
                         /* Update changes to the entity and since it's being tracked
                          * as we are in a connected state, only SaveChangesAsync is needed
                          * to persist. */
-
-                        entity.TaskID = assignment.TaskID;
-                        entity.UserID = assignment.UserID;
-                        entity.DueDate = assignment.DueDate;
                         entity.Completed = true;
 
                         // Save changes
@@ -462,12 +456,17 @@ namespace FamilyScheduler.Controllers
         // Used to Display Select Lists on Create and Edit
         private List<SelectListItem> MemberSelectList()
         {
-            var householdMembers = _context.Users.ToList();
             var memberList = new List<SelectListItem>();
 
-            foreach (User u in householdMembers)
+            // Filters out any user that is not a Member
+            var members = _userManager.GetUsersInRoleAsync("Member").Result;
+            foreach (var user in members)
             {
-                memberList.Add(new SelectListItem { Value = u.UserID.ToString(), Text = $"{u.FirstName} {u.LastName}" });
+                User member = _context.Users.Where(u => u.UserID == user.UserAccountID).First();
+                if (member != null)
+                {
+                    memberList.Add(new SelectListItem { Value = member.UserID.ToString(), Text = $"{member.FirstName} {member.LastName}" });
+                }
             }
             return memberList;
         }
