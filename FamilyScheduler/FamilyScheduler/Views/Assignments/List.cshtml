@@ -12,56 +12,61 @@
         <input type="submit" value="Add Assignment">
     </form>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Completed</th>
-            <th scope="col">Task</th>
-            <th scope="col">Due Date</th>
-            <th scope="col">Task Type</th>
-            <th scope="col">Frequency</th>
-            <th scope="col">Workload</th>
-            <th scope="col">Details</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var el in Model)
-        {
+
+@if(Model.Count() < 1){
+    <h4 class="text-primary">There are currently no Assignments. Add an Assignment or Generate a new Schedule.</h4>
+} else {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @el.FullName
-                </td>
-                <td>
-                    @el.Completed
-                </td>
-                <td>
-                    @el.TaskDescription
-                </td>
-                <td>
-                    @el.DueDate.ToShortDateString()
-                </td>
-                <td>
-                    @el.TaskTypeDescription
-                </td>
-                <td>
-                    @el.FrequencyDescription
-                </td>
-                <td>
-                    @el.WorkloadDescription
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@el.AssignmentID">Edit</a>
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@el.AssignmentID">Delete</a>
-                </td>
+                <th scope="col">Name</th>
+                <th scope="col">Completed</th>
+                <th scope="col">Task</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Task Type</th>
+                <th scope="col">Frequency</th>
+                <th scope="col">Workload</th>
+                <th scope="col">Details</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var el in Model)
+            {
+                <tr>
+                    <td>
+                        @el.FullName
+                    </td>
+                    <td>
+                        @el.Completed
+                    </td>
+                    <td>
+                        @el.TaskDescription
+                    </td>
+                    <td>
+                        @el.DueDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @el.TaskTypeDescription
+                    </td>
+                    <td>
+                        @el.FrequencyDescription
+                    </td>
+                    <td>
+                        @el.WorkloadDescription
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@el.AssignmentID">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@el.AssignmentID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

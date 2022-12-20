@@ -104,11 +104,25 @@ namespace FamilyScheduler.Controllers
         /// CREATE (GET) action for Assignments is used to display a form for Admins to Create new Assignments. 
         /// Select List items for Tasks and Members are added to the ViewBag.
         /// </summary>
-        /// <returns>The Create view for Assignments.</returns>
+        /// <returns>If there are members and tasks it will return the Create view for Assignments. If there are no members or tasks it will return
+        /// a redirect to the List Action for Assigments with an error message.</returns>
         [Route("Create")]
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            // Verify there are Members and Tasks before attempting to add an Assignment
+            var memberCount = _userManager.GetUsersInRoleAsync("Member").Result.Count();
+            if(memberCount < 1)
+            {
+                TempData["ErrorMessage"] = "Error: You must have Household Members before adding an Assignment.";
+                return RedirectToAction(nameof(List));
+            }
+
+            if (!_context.Tasks.Any())
+            {
+                TempData["ErrorMessage"] = "Error: You must have Tasks before adding an Assignment.";
+                return RedirectToAction(nameof(List));
+            }
             // Add Tasks and Users to Viewbag to display in Select List
             // Add Lists to ViewBag as a dynamic properties
             ViewBag.TaskList = TaskSelectList();

@@ -77,8 +77,8 @@ namespace FamilyScheduler.Controllers
         public ActionResult Create()
         {
             // Validation to Ensure there are at least 1 user and 1 task before running a schedule
-            int userCount = _context.Users.Count();
-            if (userCount == 0)
+            int memberCount = _userManager.GetUsersInRoleAsync("Member").Result.Count();
+            if (memberCount == 0)
             {
                 TempData["ErrorMessage"] = "Error: You must have Household Members before running a schedule.";
                 return RedirectToAction(nameof(List));
