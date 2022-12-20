@@ -1,5 +1,5 @@
 # Family_Scheduler
-### Logins are also accessible in FamilyScheduler>Areas>Identity>Data>InitializeUserRoles
+### Logins are also accessible in FamilyScheduler>Areas>Identity>Data>InitializeUserRoles.cs
 #### Admin User
 * Username: admin@chayton.info   Password: Testing123$
 
