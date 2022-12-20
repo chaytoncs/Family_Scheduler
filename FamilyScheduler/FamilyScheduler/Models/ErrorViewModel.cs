@@ -1,5 +1,6 @@
 namespace FamilyScheduler.Models
 {
+    // Error Model: Here by default.
     public class ErrorViewModel
     {
         public string? RequestId { get; set; }

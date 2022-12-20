@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FamilyScheduler.Models
 {
+    // Assignment Model: Used to represent an Assigned Task. Links to a User and a Task via TaskID / UserID.
     public class Assignment
     {
         public int AssignmentID { get; set; } // PK

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Assignments List";
 }
-
+<!--Default view for Admins. Displays all of the existing Assignments in the system.-->
 <h1>Assignments List</h1>
 @if(@TempData.ContainsKey("ErrorMessage")){
     <h3 class="text-danger">@TempData["ErrorMessage"]?.ToString()</h3>

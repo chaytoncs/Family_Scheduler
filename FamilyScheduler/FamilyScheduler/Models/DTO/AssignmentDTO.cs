@@ -3,6 +3,7 @@ using System.ComponentModel;
 
 namespace FamilyScheduler.Models.DTO
 {
+    // Data Transfer Object for Assignments. Used when I need to send Assignment related data to the view.
     public class AssignmentDTO
     {
         public int AssignmentID { get; set; } // PK

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FamilyScheduler.Models
 {
+    // User Model: Used to represent a User. Links to a List of Assignments because every Assignment must be linked to a User.
     public class User
     {
         public int UserID { get; set; } // PK

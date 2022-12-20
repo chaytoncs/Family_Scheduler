@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FamilyScheduler.Models
 {
+    // Task Model: Used to represent a Task. Links to a Frequency, Workload, and TaskType. Tasks also link to a List of Assignments because
+    // every Assignment requires a Task.
     public class Task
     {
         public int TaskID { get; set; } // PK

@@ -2,31 +2,93 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
+<!--Member view that displays their Assigned Tasks. Tasks are separated into Assignments Due Today, and Assignments Due Later this Week.-->
 @{
     @if (@TempData.ContainsKey("ErrorMessage"))
     {
         <h5 class="text-danger">@TempData["ErrorMessage"]?.ToString()</h5>
     }
     <h1>Scheduled Assignments</h1>
-    @if(@Model.Count() < 1){
-        <h4>No Scheduled Assignments</h4>
+    @if(Model.Count() < 1){
+        <h4 class="text-primary">No Scheduled Assignments</h4>
     }else{
-        <div class="container-fluid d-flex flex-row flex-wrap">
-        @foreach(var el in @Model){
-            @if(!@el.Completed){
+        var dueToday = Model.Where(e => e.DueDate <= DateTime.Today).ToList();
+        var dueLater = Model.Where(e => e.DueDate > DateTime.Today).ToList();
+
+        if(dueToday.Count < 1){
+            <h4 class="text-primary">No Assignments Due Today</h4>
+        } else {
+            <h4>Assigned Tasks Due Today</h4>
+            <div class="container-fluid d-flex flex-row flex-wrap">
+                @foreach (var el in dueToday)
+                {
                     <div class="card m-2" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">Task</h5>
                             <p class="card-text">@el.TaskDescription</p>
                             <p class="card-text">@Html.DisplayNameFor(model => model.DueDate): @el.DueDate.ToShortDateString()</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Completed): @el.Completed</p>
                             <div>
                                 <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
-                                <a asp-action="Complete" asp-route-id="@el.AssignmentID">Confirm Completion</a>
+                                @if (!el.Completed)
+                                {
+                                    <a asp-action="Complete" asp-route-id="@el.AssignmentID">Confirm Completion</a>
+                                }
                             </div>
                         </div>
                     </div>
-            }
+                }
+            </div>
         }
-        </div>
+        if(dueLater.Count < 1){
+            <h4 class="text-primary">No Assignments Due Later This Week</h4>
+        } else {
+            <h4>Assigned Tasks Due Later This Week</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Completed</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Task Type</th>
+                        <th scope="col">Frequency</th>
+                        <th scope="col">Workload</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var el in dueLater)
+                    {
+                        <tr>
+                            <td>
+                                @el.FullName
+                            </td>
+                            <td>
+                                @el.Completed
+                            </td>
+                            <td>
+                                @el.TaskDescription
+                            </td>
+                            <td>
+                                @el.DueDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @el.TaskTypeDescription
+                            </td>
+                            <td>
+                                @el.FrequencyDescription
+                            </td>
+                            <td>
+                                @el.WorkloadDescription
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@el.AssignmentID">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     }
 }

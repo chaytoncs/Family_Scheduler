@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FamilyScheduler.Controllers
 {
+    /// <summary>
+    /// The Task Controller is used by Admins to display Task related forms/views (CRUD), as well as, performing CRUD functions for Tasks.
+    /// </summary>
     [Route("Task")]
     [Authorize]
     public class TaskController : Controller
@@ -20,6 +23,10 @@ namespace FamilyScheduler.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// The List action for Task is used to display a List view of all of the Tasks in the database.
+        /// </summary>
+        /// <returns>The List view for Task along with a List of TaskDTOs.</returns>
         [Route("List")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> List()
@@ -46,7 +53,10 @@ namespace FamilyScheduler.Controllers
             return View(taskDTOs);
         }
 
-        // GET CREATE
+        /// <summary>
+        /// CREATE (GET) action for Task is used to display a form for Admins to create new Tasks. Adds Select List items for Workload, Frequency, and TakType to the Viewbag.
+        /// </summary>
+        /// <returns>The Create for view for Task.</returns>
         [Route("Create")]
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -60,7 +70,12 @@ namespace FamilyScheduler.Controllers
             return View("Create");
         }
 
-        // POST CREATE
+        /// <summary>
+        /// CREATE (POST) action for Task is used to perform the Create and save function for a new Task. 
+        /// </summary>
+        /// <param name="task">The task param is the TaskDTO returned from the view, which contains the user bound TaskDTO values.</param>
+        /// <returns>A redirect to the List view for Task if the creation of a new Task is successful. If the Model State is Invalid it will return the invalid task param (TaskDTO Model)
+        /// to the Create(GET) view.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Create")]
@@ -87,6 +102,12 @@ namespace FamilyScheduler.Controllers
             return View(task);
         }
 
+        /// <summary>
+        /// Details action for Task is used to display all the details of the Task and its related data (Workload, Frequency, TaskType).
+        /// </summary>
+        /// <param name="id">The id param is the TaskID passed from the view or retrieved from route data, which is used to query the Tasks table to retrieve the Task details.</param>
+        /// <returns>If the id passed in exists and a Task is found, it will return the Details view for Task with a TaskDTO. If the id was not passed in or the 
+        /// task was not found, it will return a NotFound view.</returns>
         [Route("Details/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
@@ -129,7 +150,12 @@ namespace FamilyScheduler.Controllers
             return View(taskDTO);
         }
 
-        // GET EDIT
+        /// <summary>
+        /// EDIT (GET) action is used to display an edit form for a specified task.
+        /// </summary>
+        /// <param name="id">The id param is the TaskID passed from the view or retrieved from route data, which is used to query the Tasks table to retrieve the Task details.</param>
+        /// <returns>If the id passed in exists and a Task is found, it will return the Edit view for Task with a TaskDTO. If the id was not passed in or the 
+        /// task was not found, it will return a NotFound view.</returns>
         [Route("Edit/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
@@ -173,7 +199,13 @@ namespace FamilyScheduler.Controllers
             return View(taskDTO);
         }
 
-        // POST EDIT
+        /// <summary>
+        /// EDIT (POST) action handles the update and save functions for a Task.
+        /// </summary>
+        /// <param name="id">The id param is the TaskID passed from the view or retrieved from route data, which is used to query the Tasks table to retrieve the Task entity.</param>
+        /// <param name="task">The task param is the TaskDTO passed from the view, which contains the user bound data.</param>
+        /// <returns>If the id param does not match the TaskID on the "task" param, it returns a NotFound View. If the Model State is Invalid, it returns 
+        /// the Edit view alongside the "task" TaskDTO. On a successfull update it will return a redirect to the List Task action.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
@@ -226,7 +258,12 @@ namespace FamilyScheduler.Controllers
             return View(task);
         }
 
-        // GET DELETE
+        /// <summary>
+        /// DELETE (GET) action is used to display a form that is used to delete a task.
+        /// </summary>
+        /// <param name="id">The id param corresponds to a TaskID for a Task that a user wants to delete.</param>
+        /// <returns>If the user does not pass in an id, it returns a NotFound view. If there is not Task that matches the passed in id, it returns a 
+        /// NotFound view. If the id passed in corresponds to a TaskID for a Task, it will return the Delete view for Task along with a TaskDTO.</returns>
         [Route("Delete/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
@@ -260,7 +297,11 @@ namespace FamilyScheduler.Controllers
             return View(taskDTO);
         }
 
-        // POST DELETE
+        /// <summary>
+        /// DELETE (POST) action is used to perform the delete function for a task.
+        /// </summary>
+        /// <param name="id">The id param corresponds to a TaskID for a Task that a user wants to delete.</param>
+        /// <returns>A redirect to the List Task action.</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("Delete/{id}")]
@@ -281,8 +322,10 @@ namespace FamilyScheduler.Controllers
             return RedirectToAction(nameof(List));
         }
 
-        // Loads all Workloads into Select List
-        // Used to Display Select Lists on Create and Edit
+        /// <summary>
+        /// Loads all Workloads into Select List. Used to Display Select Lists on Create and Edit.
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> WorkloadSelectList()
         {
             var workloads = _context.Workloads.ToList();
@@ -295,8 +338,10 @@ namespace FamilyScheduler.Controllers
             return workloadList;
         }
 
-        // Loads all Frequencies into Select List
-        // Used to Display Select Lists on Create and Edit
+        /// <summary>
+        /// Loads all Frequencies into Select List. Used to Display Select Lists on Create and Edit.
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> FrequencySelectList()
         {
             var frequencies = _context.Frequencies.ToList();
@@ -309,8 +354,10 @@ namespace FamilyScheduler.Controllers
             return frequencyList;
         }
 
-        // Loads all TaskTypes into Select List
-        // Used to Display Select Lists on Create and Edit
+        /// <summary>
+        /// Loads all TaskTypes into Select List. Used to Display Select Lists on Create and Edit.
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> TaskTypeSelectList()
         {
             var taskTypes = _context.TaskTypes.ToList();

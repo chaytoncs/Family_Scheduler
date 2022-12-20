@@ -12,6 +12,9 @@ using System.Security.Claims;
 
 namespace FamilyScheduler.Controllers
 {
+    /// <summary>
+    /// The Assignment Controller is used by Admins and Members to display Assignment related forms/views (CRUD), as well as, performing CRUD functions for Assignments.
+    /// </summary>
     [Route("")]
     [Route("Assignment")]
     [Authorize]
@@ -27,6 +30,13 @@ namespace FamilyScheduler.Controllers
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// The List action for Assignments is used to display the List view (for Admin) or Dashboard (Member). The list view contains 
+        /// all of the assignments (for Admin) or Assignments linked to a specific Member (for Member).
+        /// </summary>
+        /// <returns>The List view for Assignments along with all assignments transformed to AssignmentDTOs (for Admin). 
+        /// The Dashboard view for Assignments along with all the assigments linked to the signed in user transformed to AssignmentDTOs (for Member).
+        /// </returns>
         [Route("")]
         [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> List()
@@ -90,7 +100,11 @@ namespace FamilyScheduler.Controllers
             return View("Dashboard", assigmentDTOs);
         }
 
-        // GET CREATE
+        /// <summary>
+        /// CREATE (GET) action for Assignments is used to display a form for Admins to Create new Assignments. 
+        /// Select List items for Tasks and Members are added to the ViewBag.
+        /// </summary>
+        /// <returns>The Create view for Assignments.</returns>
         [Route("Create")]
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -103,7 +117,12 @@ namespace FamilyScheduler.Controllers
             return View("Create");
         }
 
-        // POST CREATE
+        /// <summary>
+        /// CREATE (POST) action is used to perform the function of creating and saving a new assignment to the database.
+        /// </summary>
+        /// <param name="assignment">The assignment param is the AssignmentDTO from the create view, which contains the user bound Assignment information.</param>
+        /// <returns>If the Model State is invalid it will return the Create view with the "assigment" AssignmentDTO. If the creation is successful, it will 
+        /// return a redirect to the List view for Assignments.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Create")]
@@ -130,6 +149,12 @@ namespace FamilyScheduler.Controllers
             return View(assignment);
         }
 
+        /// <summary>
+        /// The Details action for Assigments is used to display the details for a specified Assignment.
+        /// </summary>
+        /// <param name="id">The id param corresponds to an AssigmentID of an Assignment that the user wants to retrieve details for.</param>
+        /// <returns>If the id is not passed in or there is no Assignment that corresponds to the id, it will return a NotFound View. If the Assignment is found based
+        /// on the passed in id, it will return the Details view for Assignments along with a Assigment DTO.</returns>
         [Route("Details/{id}")]
         [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> Details(int? id)
@@ -189,7 +214,12 @@ namespace FamilyScheduler.Controllers
             return View(assignmentDTO);
         }
 
-        // GET EDIT
+        /// <summary>
+        /// EDIT (GET) action is used to display a form for an Admin to edit the details of an Assignment.
+        /// </summary>
+        /// <param name="id">The id param corresponds to an AssigmentID of an Assignment that the user wants to retrieve details for.</param>
+        /// <returns>If the id is not passed in or there is no Assignment that corresponds to the id, it will return a NotFound View. If the Assignment is found based
+        /// on the passed in id, it will return the Edit view for Assignments along with a Assigment DTO.</returns>
         [Route("Edit/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
@@ -230,7 +260,13 @@ namespace FamilyScheduler.Controllers
             return View(assignmentDTO);
         }
 
-        // POST EDIT
+        /// <summary>
+        /// EDIT (POST) action is used to perform the updates to a specified Assignment.
+        /// </summary>
+        /// <param name="id">The id param is the AssignmentID passed from the view or retrieved from route data, which is used to query the Assigments table to retrieve the Assignment entity.</param>
+        /// <param name="assignment">The assignment param is the AssignmentDTO passed from the view, which contains the user bound data.</param>
+        /// <returns>If the id param does not match the AssigmentID on the "assignment" param, it returns a NotFound View. If the Model State is Invalid, it returns 
+        /// the Edit view alongside the "assigment" AssignmentDTO. On a successfull update it will return a redirect to the List Assigment action.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Edit/{id}")]
@@ -284,7 +320,12 @@ namespace FamilyScheduler.Controllers
             return View(assignment);
         }
 
-        // GET DELETE
+        /// <summary>
+        /// DELETE (GET) action is used to display a form that is used to delete an Assigment.
+        /// </summary>
+        /// <param name="id">The id param corresponds to a AssignmentID for a Assignment that a user wants to delete.</param>
+        /// <returns>If the user does not pass in an id, it returns a NotFound view. If there is not Assignment that matches the passed in id, it returns a 
+        /// NotFound view. If the id passed in corresponds to a AssignmentID for a Assignment, it will return the Delete view for Assignment along with a AssignmentDTO.</returns>
         [Route("Delete/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
@@ -318,7 +359,11 @@ namespace FamilyScheduler.Controllers
             return View(assignmentDTO);
         }
 
-        // POST DELETE
+        /// <summary>
+        /// DELETE (POST) action is used to perform the delete function for a Assignment.
+        /// </summary>
+        /// <param name="id">The id param corresponds to a AssignmentID for a Assignment that a user wants to delete.</param>
+        /// <returns>A redirect to the List Assignment action.</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("Delete/{id}")]
@@ -338,8 +383,14 @@ namespace FamilyScheduler.Controllers
             return RedirectToAction(nameof(List));
         }
 
-        // GET Complete
-        // Used for Household members to mark assignments complete
+        /// <summary>
+        /// COMPLETE (GET) action displays a form that allows users to the completion for an Assignment.
+        /// </summary>
+        /// <param name="id">The id param corresponds to a AssignmentID for a Assignment that a user wants to confirm completion.</param>
+        /// <returns>If the id is not passed in or if the id does not correspond to an Assignment, it returns a NotFound view.
+        /// If a Member attempts to access Complete for an Assignment that is not associated with their UserID, it will return a Redirect to the List Assignment action with an error
+        /// message stored in temp data. If the Assignment that corresponds to the id passed in and it belongs to the user (or if user is Admin), it returns the Complete view for
+        /// Assignments along with an AssignmentDTO.</returns>
         [Route("Complete/{id}")]
         [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> Complete(int? id)
@@ -400,8 +451,14 @@ namespace FamilyScheduler.Controllers
             return View(assignmentDTO);
         }
 
-        // POST Complete
-        // Used for Household members to mark assignments complete
+        /// <summary>
+        /// COMPLETE (POST) action is used to update the Completed field on an Assignment.
+        /// </summary>
+        /// <param name="id">The id param corresponds to a AssignmentID for a Assignment that a user wants to confirm completion.</param>
+        /// <param name="assignment">The assignment param is the AssignmentDTO passed from the view, which contains the user bound data.</param>
+        /// <returns>If the id param does not match the AssigmentID on the assignment param, it will return a NotFound view. If the Model State is invalid, it will return 
+        /// the Complete view for Assignments along with the "assignment" Assigment DTO. If the update to the Completed field is successful, it will return a Redirect
+        /// to the List Assignments action.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Complete/{id}")]
@@ -452,8 +509,10 @@ namespace FamilyScheduler.Controllers
         }
 
 
-        // Loads all Members into Select List
-        // Used to Display Select Lists on Create and Edit
+        /// <summary>
+        /// Loads all Members into Select List. Used to Display Select Lists on Create and Edit
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> MemberSelectList()
         {
             var memberList = new List<SelectListItem>();
@@ -471,8 +530,10 @@ namespace FamilyScheduler.Controllers
             return memberList;
         }
 
-        // Loads all Tasks into Select List
-        // Used to Display Select Lists on Create and Edit
+        /// <summary>
+        /// Loads all Tasks into Select List. Used to Display Select Lists on Create and Edit.
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> TaskSelectList()
         {
             var tasks = _context.Tasks.ToList();

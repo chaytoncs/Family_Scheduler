@@ -25,6 +25,15 @@ namespace FamilyScheduler.Areas.Identity.Data
 
                 var memberID = await EnsureUser(serviceProvider, Password, "member@chayton.info", "Tyler", "Sutton");
                 await EnsureRole(serviceProvider, memberID, MemberRole);
+
+                var memberID2 = await EnsureUser(serviceProvider, Password, "member2@chayton.info", "Tomi", "Hermindonger");
+                await EnsureRole(serviceProvider, memberID2, MemberRole);
+
+                var memberID3 = await EnsureUser(serviceProvider, Password, "member3@chayton.info", "Catie", "Sutton");
+                await EnsureRole(serviceProvider, memberID3, MemberRole);
+
+                var memberID4 = await EnsureUser(serviceProvider, Password, "member4@chayton.info", "Joey", "Sutton");
+                await EnsureRole(serviceProvider, memberID4, MemberRole);
             }
         }
 

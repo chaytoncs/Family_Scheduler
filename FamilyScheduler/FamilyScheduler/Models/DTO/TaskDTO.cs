@@ -2,6 +2,7 @@
 
 namespace FamilyScheduler.Models.DTO
 {
+    // Data Transfer Object for Tasks. Used when I need to send Task related data to the view.
     public class TaskDTO
     {
         public int TaskID { get; set; } // PK
