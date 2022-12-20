@@ -1,4 +1,5 @@
 ﻿using FamilyScheduler.Models;
+using SQLitePCL;
 
 namespace FamilyScheduler.Data
 {
@@ -13,62 +14,48 @@ namespace FamilyScheduler.Data
                 return;
             }
 
-            // Create Entities
-            var workload = new Workload
+            // Create Workload Entities
+            var easy = new Workload { Description = "Easy", Value = 1 };
+            var medium = new Workload() { Description = "Medium", Value = 2 };
+            var hard = new Workload() { Description = "Hard", Value = 3 };
+
+            // Add to DbSet
+            context.Workloads.Add(easy);
+            context.Workloads.Add(medium);
+            context.Workloads.Add(hard);
+
+            // Create TaskType Entities
+            var kitchen = new TaskType { Description = "Kitchen Task" };
+            var outdoor = new TaskType() { Description = "Outdoor Task" };
+            var house = new TaskType() { Description = "House Task" };
+
+            // Add to DbSet
+            context.TaskTypes.Add(kitchen);
+            context.TaskTypes.Add(outdoor);
+            context.TaskTypes.Add(house);
+
+            // Create Frequency Entities
+            var daily = new Frequency { Description = "Daily", Value = 0 };
+            var weekly = new Frequency { Description = "Weekly", Value = 1 };
+
+            // Add to DbSet
+            context.Frequencies.Add(daily);
+            context.Frequencies.Add(weekly);
+
+            // Create Task Entities
+            var taskList = new List<Models.Task>()
             {
-                Description = "Easy",
-                Value = 1
+                new Models.Task() { Description = "Wash the dishes", Workload = easy, Frequency = daily, TaskType = kitchen },
+                new Models.Task() { Description = "Mow the lawn", Workload = hard, Frequency = weekly, TaskType = outdoor },
+                new Models.Task() { Description = "Sweep the floor", Workload = easy, Frequency = daily, TaskType = kitchen },
+                new Models.Task() { Description = "Clean the living room", Workload = easy, Frequency = daily, TaskType = house },
+                new Models.Task() { Description = "Clean the bathroom", Workload = medium, Frequency = daily, TaskType = house },
+                new Models.Task() { Description = "Walk the dog", Workload = medium, Frequency = daily, TaskType = outdoor },
+                new Models.Task() { Description = "Clean the fridge", Workload = easy, Frequency = weekly, TaskType = kitchen }
             };
 
             // Add to DbSet
-            context.Workloads.Add(workload);
-
-            var tasktype = new TaskType
-            {
-                Description = "Kitchen Task"
-            };
-            // Add to DbSet
-            context.TaskTypes.Add(tasktype);
-
-            var frequency = new Frequency
-            {
-                Description = "Daily",
-                Value = 0
-            };
-            // Add to DbSet
-            context.Frequencies.Add(frequency);
-
-            var task = new FamilyScheduler.Models.Task
-            {
-                Description = "Wash the dishes",
-                Workload = workload,
-                TaskType = tasktype,
-                Frequency = frequency,
-            };
-
-            var workloadList = new List<Workload>
-            {
-                new Workload() {Description = "Medium", Value = 1},
-                new Workload() {Description = "Hard", Value = 2}
-            };
-
-            var frequencyList = new List<Frequency>
-            {
-                new Frequency() {Description = "Weekly", Value = 1}
-            };
-
-            var taskTypeList = new List<TaskType>
-            {
-                new TaskType() {Description = "Outdoor Task"},
-                new TaskType() {Description = "Shopping Task"}
-            };
-
-
-            // Add to DbSet
-            context.Tasks.Add(task);
-            context.Workloads.AddRange(workloadList);
-            context.Frequencies.AddRange(frequencyList);
-            context.TaskTypes.AddRange(taskTypeList);
+            context.Tasks.AddRange(taskList);
 
             // Commit Changes
             context.SaveChanges();

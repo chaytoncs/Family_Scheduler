@@ -431,6 +431,13 @@ namespace FamilyScheduler.Controllers
                     TempData["ErrorMessage"] = "Page Forbidden: This assignment does not belong to you.";
                     return RedirectToAction(nameof(List));
                 }
+
+                // Checks if user is attempting to confirm completion on a task that is due on a future date
+                if (assignment.DueDate > DateTime.Today)
+                {
+                    TempData["ErrorMessage"] = "Error: You cannot complete an Assigned Task due on a future date.";
+                    return RedirectToAction(nameof(List));
+                }
             }
 
             // Transform Assignment to DTO
