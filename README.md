@@ -12,7 +12,7 @@
 #### Final Note
 On startup there will only be Users, Tasks, Workloads, Frequencies, and TaskTypes in the database. I have added enough data to quickly generate multiple assignments for every household member on startup, but you will need to run the Generate New Schedule to have assignments added.
 
-If you choose to register a new user (Sign Up), the new user will be given the role of "Member" by default. The only way to add an Admin user is throught the code (in InitializeUserRoles.cs).
+If you choose to register a new user (Sign Up), the new user will be given the role of "Member" by default. The only way to add an Admin user is through the code (in InitializeUserRoles.cs).
 
 #### Steps to Generating a Schedule
 1. Login as the Admin User.
